@@ -86,7 +86,7 @@
     .nav-logo-text {
       font-family: var(--mono);
       font-size: 15px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       color: var(--cyan);
       text-transform: uppercase;
     }
@@ -101,7 +101,7 @@
     .nav-links a {
       font-family: var(--mono);
       font-size: 13px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-dim);
       text-decoration: none;
@@ -889,30 +889,34 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 32px;
     }
 
     .footer-logo {
       font-family: var(--mono);
-      font-size: 15px;
-      letter-spacing: 0.2em;
+      font-size: 14px;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .footer-links {
       display: flex;
-      gap: 24px;
+      gap: 32px;
       list-style: none;
+      flex-wrap: nowrap;
     }
 
     .footer-links a {
       font-family: var(--mono);
       font-size: 12px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.08em;
       color: var(--text-muted);
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.2s;
+      white-space: nowrap;
     }
 
     .footer-links a:hover { color: var(--cyan); }
@@ -920,9 +924,10 @@
     .footer-copy {
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     /* ─── ANIMATIONS ──────────────────────── */
@@ -980,12 +985,11 @@
     <span class="nav-logo-text">AdvisorHUD</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
+    <li><a href="#features">Capabilities</a></li>
     <li><a href="#workflow">How It Works</a></li>
-    <li><a href="#social-proof">Testimonials</a></li>
-    <li><a href="https://app.advisorhud.com">Login</a></li>
+    <li><a href="#social-proof">Why It Exists</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">Request Demo</a>
+  <a href="https://app.advisorhud.com" class="nav-cta">Enter Platform</a>
 </nav>
 
 <!-- HERO -->
@@ -994,18 +998,18 @@
   <div class="hero-glow"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Operational Command for RIA Firms</div>
+    <div class="hero-eyebrow">Operational Command · Proxy Advisory Group</div>
     <h1 class="hero-title">
-      Your Ops Team<br>
-      <span class="accent">Finally Has A HUD.</span>
+      Built for How<br>
+      <span class="accent">Proxy Actually Operates.</span>
     </h1>
     <p class="hero-subtitle">AWACS · Advisor Workflow & Coordination System</p>
     <p class="hero-desc">
-      AdvisorHUD gives your back-office team <strong>total operational visibility</strong> — active onboardings, open requests, overdue tasks, and team workload, all in one command interface built for RIA operations.
+      AdvisorHUD is an <strong>operational command platform</strong> built around the realities of running a multi-custodian RIA — giving ops teams real-time visibility into advisor onboarding, open requests, ownership, blockers, and SLA risk. All in one place.
     </p>
     <div class="hero-actions">
-      <a href="#cta" class="btn-primary">Request a Demo</a>
-      <a href="#features" class="btn-ghost">See How It Works</a>
+      <a href="https://app.advisorhud.com" class="btn-primary">Enter Platform</a>
+      <a href="#features" class="btn-ghost">Explore the System</a>
     </div>
   </div>
 
@@ -1036,57 +1040,57 @@
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Integration</span>
-    <span class="ticker-item"><span class="dot"></span> Schwab Integration</span>
-    <span class="ticker-item"><span class="dot"></span> Pershing Integration</span>
-    <span class="ticker-item"><span class="dot"></span> AssetMark Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Schwab Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Pershing Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> AssetMark Workflows</span>
     <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
-    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Support</span>
-    <span class="ticker-item"><span class="dot"></span> Real-Time SLA Tracking</span>
-    <span class="ticker-item"><span class="dot"></span> Team Workload Visibility</span>
-    <span class="ticker-item"><span class="dot"></span> Exception Alerts</span>
+    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Tracking</span>
+    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Operations</span>
+    <span class="ticker-item"><span class="dot"></span> SLA & Deadline Awareness</span>
+    <span class="ticker-item"><span class="dot"></span> Team Workload Management</span>
+    <span class="ticker-item"><span class="dot"></span> Exception & Alert Surfacing</span>
     <!-- duplicate for seamless loop -->
-    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Integration</span>
-    <span class="ticker-item"><span class="dot"></span> Schwab Integration</span>
-    <span class="ticker-item"><span class="dot"></span> Pershing Integration</span>
-    <span class="ticker-item"><span class="dot"></span> AssetMark Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Schwab Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Pershing Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> AssetMark Workflows</span>
     <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
-    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Support</span>
-    <span class="ticker-item"><span class="dot"></span> Real-Time SLA Tracking</span>
-    <span class="ticker-item"><span class="dot"></span> Team Workload Visibility</span>
-    <span class="ticker-item"><span class="dot"></span> Exception Alerts</span>
+    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Tracking</span>
+    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Operations</span>
+    <span class="ticker-item"><span class="dot"></span> SLA & Deadline Awareness</span>
+    <span class="ticker-item"><span class="dot"></span> Team Workload Management</span>
+    <span class="ticker-item"><span class="dot"></span> Exception & Alert Surfacing</span>
   </div>
 </div>
 
 <!-- PROBLEM -->
 <section id="problem">
   <div style="max-width:1200px; margin:0 auto;">
-    <div class="section-label">The Problem</div>
-    <h2 class="section-title">RIA Ops Runs on Spreadsheets,<br>Emails & Guesswork.</h2>
-    <p class="section-body">Your team is managing dozens of moving parts across multiple custodians — with no single place to see what's happening, what's overdue, or who's responsible.</p>
+    <div class="section-label">The Operational Reality</div>
+    <h2 class="section-title">Multi-Custodian RIA Ops<br>Is Harder Than It Should Be.</h2>
+    <p class="section-body">Proxy operates across multiple custodians, manages dozens of active advisors, and runs a high volume of concurrent service requests — with no unified system to track any of it.</p>
 
     <div class="problem-grid">
       <div class="problem-item fade-up" data-num="01">
         <div class="problem-icon">✕ Visibility Gap</div>
-        <div class="problem-title">No One Knows What's Actually Open</div>
-        <p class="problem-desc">Onboarding status lives in emails. Service requests get buried in inboxes. Deadlines slip because nobody has a clear picture of what's active.</p>
+        <div class="problem-title">No Single View of What's Active</div>
+        <p class="problem-desc">Onboarding status lives in emails and memory. Service requests are scattered across inboxes. There's no reliable way to know what's open, what's stuck, or what's at risk — without asking.</p>
       </div>
       <div class="problem-item fade-up" data-num="02">
-        <div class="problem-icon">✕ Ownership Confusion</div>
-        <div class="problem-title">Unclear Who Owns What</div>
-        <p class="problem-desc">Tasks get assigned in meetings and lost by Monday. Without clear ownership and status, your ops team is always playing catch-up.</p>
+        <div class="problem-icon">✕ Ownership Ambiguity</div>
+        <div class="problem-title">Accountability Breaks Down at Scale</div>
+        <p class="problem-desc">Tasks get assigned verbally or in passing. Without a system of record, ownership is assumed rather than confirmed — and things fall through the cracks on busy days.</p>
       </div>
       <div class="problem-item fade-up" data-num="03">
         <div class="problem-icon">✕ Exception Blindness</div>
-        <div class="problem-title">Overdue Items Surface Too Late</div>
-        <p class="problem-desc">By the time you realize something is overdue, it's already a problem for the advisor — or worse, for the client.</p>
+        <div class="problem-title">Problems Surface After the Fact</div>
+        <p class="problem-desc">By the time an overdue item becomes visible, it's already an advisor escalation or a client impact. The team is reactive when it needs to be proactive.</p>
       </div>
       <div class="problem-item fade-up" data-num="04">
         <div class="problem-icon">✕ Custodian Fragmentation</div>
-        <div class="problem-title">Four Custodians, Four Different Portals</div>
-        <p class="problem-desc">Fidelity, Schwab, Pershing, AssetMark — your team is context-switching constantly with no unified workflow layer on top.</p>
+        <div class="problem-title">Every Custodian Is a Different Context Switch</div>
+        <p class="problem-desc">Fidelity, Schwab, Pershing, AssetMark, Cambridge — each has its own portal, its own process, its own quirks. There's no unified workflow layer sitting above all of them.</p>
       </div>
     </div>
   </div>
@@ -1096,42 +1100,42 @@
 <section id="features">
   <div class="features-header">
     <div>
-      <div class="section-label">The Solution</div>
-      <h2 class="section-title">One Command Interface.<br>Total Operational Control.</h2>
+      <div class="section-label">What AdvisorHUD Gives Operations</div>
+      <h2 class="section-title">One System.<br>Everything Visible.</h2>
     </div>
-    <p class="section-body" style="margin-top:0;">AdvisorHUD was built specifically for RIA ops teams — not adapted from generic project management software. Every feature is designed around how your back-office actually works.</p>
+    <p class="section-body" style="margin-top:0;">AdvisorHUD was designed around the actual workflow of a multi-custodian RIA ops team — not adapted from generic project management software. Every module reflects how Proxy's back-office actually operates.</p>
   </div>
 
   <div class="features-grid">
     <div class="feature-card fade-up">
       <div class="feature-tag">Onboarding</div>
-      <div class="feature-title">End-to-End Onboarding Workflows</div>
-      <p class="feature-desc">Track every advisor onboarding from week 1 registration through full platform access. Progress, tasks, deadlines, and blockers — all visible at a glance.</p>
+      <div class="feature-title">End-to-End Onboarding Visibility</div>
+      <p class="feature-desc">Every active advisor onboarding is tracked from week 1 registration through full platform access — with progress, task completion, deadlines, and blockers visible at a glance.</p>
     </div>
     <div class="feature-card fade-up">
       <div class="feature-tag">Requests</div>
       <div class="feature-title">Centralized Request Queue</div>
-      <p class="feature-desc">Every service request — account openings, transfers, paperwork — surfaces in a single prioritized queue with SLA age, ownership, and status.</p>
+      <p class="feature-desc">Every service request — account openings, ACATs, paperwork, access setup — surfaces in a single prioritized queue with SLA age, assigned owner, and current status.</p>
     </div>
     <div class="feature-card fade-up">
       <div class="feature-tag">Alerts</div>
-      <div class="feature-title">Exception & Alert System</div>
-      <p class="feature-desc">Overdue tasks, blocked items, and SLA breaches are surfaced automatically. Your team stops items before they become advisor-visible problems.</p>
+      <div class="feature-title">Exception & SLA Alert System</div>
+      <p class="feature-desc">Overdue tasks, blocked items, and SLA breaches are surfaced automatically. The ops team sees problems before they become advisor escalations or client impacts.</p>
     </div>
     <div class="feature-card fade-up">
       <div class="feature-tag">Team</div>
-      <div class="feature-title">Ops Workload Visibility</div>
-      <p class="feature-desc">See at a glance what each team member has open. Balance workload, spot bottlenecks, and prevent burnout before it happens.</p>
+      <div class="feature-title">Ops Workload Intelligence</div>
+      <p class="feature-desc">A live view of what each team member has open. Leadership can see where load is concentrated, where capacity exists, and where bottlenecks are forming — in real time.</p>
     </div>
     <div class="feature-card fade-up">
       <div class="feature-tag">Custodians</div>
-      <div class="feature-title">Multi-Custodian Architecture</div>
-      <p class="feature-desc">Purpose-built for firms on Fidelity/NFS, Schwab, Pershing, AssetMark, and Cambridge/WealthPort — with workflows that mirror custodian-specific processes.</p>
+      <div class="feature-title">Multi-Custodian Workflow Layer</div>
+      <p class="feature-desc">Built for firms running Fidelity/NFS, Schwab, Pershing, AssetMark, and Cambridge/WealthPort — with workflows that reflect custodian-specific processes and requirements.</p>
     </div>
     <div class="feature-card fade-up">
-      <div class="feature-tag">Materials</div>
-      <div class="feature-title">Branded Advisor Materials</div>
-      <p class="feature-desc">Generate and manage branded onboarding materials, checklists, and communications — all inside the same platform your ops team already lives in.</p>
+      <div class="feature-tag">Clarity</div>
+      <div class="feature-title">Advisor vs. Internal Separation</div>
+      <p class="feature-desc">Internal ops notes, flags, and communications stay internal. Advisor-facing status and updates are clean and appropriate — managed within the same system, not a separate one.</p>
     </div>
   </div>
 </section>
@@ -1140,36 +1144,36 @@
 <section id="workflow">
   <div class="workflow-inner" style="max-width:1200px; margin:0 auto;">
     <div>
-      <div class="section-label">How It Works</div>
+      <div class="section-label">How Proxy Would Use This</div>
       <h2 class="section-title">Ops That Runs Like a Control Room.</h2>
 
       <div class="workflow-steps">
         <div class="workflow-step fade-up">
           <span class="step-num">01</span>
           <div class="step-content">
-            <div class="step-title">Firm-Wide Dashboard on Login</div>
-            <p class="step-desc">Every ops team member opens AdvisorHUD to a live command view — active onboardings, open requests, alerts, and team workload in one screen.</p>
+            <div class="step-title">Firm-Wide View on Every Login</div>
+            <p class="step-desc">Every ops team member opens to a live command view — active onboardings, open requests, alerts, and workload distribution across the team. No status meetings required.</p>
           </div>
         </div>
         <div class="workflow-step fade-up">
           <span class="step-num">02</span>
           <div class="step-content">
-            <div class="step-title">Exceptions Surface Automatically</div>
-            <p class="step-desc">Overdue tasks and SLA breaches are flagged without anyone having to check. The system brings problems to the team — not the other way around.</p>
+            <div class="step-title">Exceptions Come to the Team</div>
+            <p class="step-desc">Overdue items and SLA breaches are flagged automatically. The system surfaces problems — the team doesn't have to go hunting for them.</p>
           </div>
         </div>
         <div class="workflow-step fade-up">
           <span class="step-num">03</span>
           <div class="step-content">
-            <div class="step-title">Clear Ownership at Every Step</div>
-            <p class="step-desc">Every task and request has an owner, a status, and an age. Nothing falls through the cracks because nothing is ambiguous.</p>
+            <div class="step-title">Ownership Is Always Clear</div>
+            <p class="step-desc">Every task and request has a named owner, a status, and an age. Ambiguity is removed. Nothing is assumed. Nothing is lost.</p>
           </div>
         </div>
         <div class="workflow-step fade-up">
           <span class="step-num">04</span>
           <div class="step-content">
-            <div class="step-title">Advisors See What They Should</div>
-            <p class="step-desc">Internal ops notes stay internal. Advisor-facing updates are clean, professional, and appropriate — without requiring a separate system.</p>
+            <div class="step-title">Leadership Has a Real-Time Read</div>
+            <p class="step-desc">Operations leadership can see the full picture at any moment — what's active, what's at risk, who's overloaded, and what needs attention — without interrupting the team.</p>
           </div>
         </div>
       </div>
@@ -1237,7 +1241,7 @@
 
 <!-- CUSTODIANS -->
 <section id="custodians">
-  <p class="custodian-label">Works with your custodians</p>
+  <p class="custodian-label">Designed around Proxy's custodian environment</p>
   <div class="custodian-list">
     <span class="custodian-name">Fidelity / NFS</span>
     <span class="custodian-sep"></span>
@@ -1251,27 +1255,28 @@
   </div>
 </section>
 
-<!-- SOCIAL PROOF -->
+<!-- PRINCIPLES -->
 <section id="social-proof">
   <div style="max-width:1200px; margin:0 auto;">
-    <div class="section-label">From the Field</div>
-    <h2 class="section-title">Built for Ops Teams.<br>Loved by Ops Teams.</h2>
+    <div class="section-label">Why This Exists</div>
+    <h2 class="section-title">Built on a Simple Premise.<br>Ops Deserves Better Tooling.</h2>
+    <p class="section-body" style="margin-bottom: 64px;">AdvisorHUD started as a question: what would RIA operations look like if the team had the same situational awareness that a pilot has in the cockpit — everything critical, visible, surfaced before it becomes a problem. These are the principles it's built around.</p>
 
     <div class="testimonial-grid">
       <div class="testimonial-card fade-up">
-        <p class="testimonial-text">"We went from chasing down statuses in three different Slack channels to knowing exactly where every onboarding stands the moment we open the platform."</p>
-        <div class="testimonial-author">Director of Operations</div>
-        <div class="testimonial-role">Independent RIA · $800M AUM</div>
+        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 01</div>
+        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Visibility Before Action</div>
+        <p class="feature-desc">You can't manage what you can't see. Before anything else, AdvisorHUD is designed to give operations a complete, accurate picture of everything in motion — onboardings, requests, alerts, workload — at any moment.</p>
       </div>
       <div class="testimonial-card fade-up">
-        <p class="testimonial-text">"The alert system alone has saved us from at least a dozen advisor escalations. We know about problems before they become problems."</p>
-        <div class="testimonial-author">Ops Manager</div>
-        <div class="testimonial-role">Hybrid RIA · Fidelity & Schwab</div>
+        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 02</div>
+        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Exceptions Should Find You</div>
+        <p class="feature-desc">A good ops system doesn't wait to be checked. It surfaces problems proactively — flagging overdue items, SLA risk, and blocked tasks before they require escalation or become advisor-visible issues.</p>
       </div>
       <div class="testimonial-card fade-up">
-        <p class="testimonial-text">"Finally a system that understands how RIA ops actually works — not some generic project tool we had to shoehorn into our workflow."</p>
-        <div class="testimonial-author">Chief Operating Officer</div>
-        <div class="testimonial-role">Multi-Custodian RIA · $1.2B AUM</div>
+        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 03</div>
+        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Ownership Must Be Unambiguous</div>
+        <p class="feature-desc">Every task, every request, every open item has a named owner and a clear status. Not assumed. Not implied. Explicitly assigned and tracked — so accountability is built into the system, not left to culture.</p>
       </div>
     </div>
   </div>
@@ -1279,21 +1284,20 @@
 
 <!-- CTA -->
 <section id="cta">
-  <div class="cta-eyebrow">Ready to Upgrade Your Ops</div>
-  <h2 class="cta-title">See AdvisorHUD<br>In Your Firm.</h2>
-  <p class="cta-sub">Get a personalized walkthrough with your custodian setup, team structure, and workflows in mind.</p>
-  <a href="/cdn-cgi/l/email-protection#fc98999193bc9d988a958f938e948998d29f9391c38f899e96999f88c1b8999193dcae998d89998f88" class="btn-primary" style="font-size:13px; padding:16px 40px;">Request a Demo</a>
-  <p class="cta-note">No commitment · Typical setup in under a week</p>
+  <div class="cta-eyebrow">The Platform Is Live</div>
+  <h2 class="cta-title">AdvisorHUD Is<br>Ready to Explore.</h2>
+  <p class="cta-sub">Log in to walk through an active onboarding, explore the request queue, or review the alert and workload views. The core workflows are functional and running.</p>
+  <a href="https://app.advisorhud.com" class="btn-primary" style="font-size:13px; padding:16px 40px;">Enter Platform</a>
+  <p class="cta-note">Proxy Advisory Group · Internal Access</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">AdvisorHUD</div>
   <ul class="footer-links">
-    <li><a href="#features">Features</a></li>
+    <li><a href="#features">Capabilities</a></li>
     <li><a href="#workflow">How It Works</a></li>
-    <li><a href="/cdn-cgi/l/email-protection#2c44494040436c4d485a455f435e445948024f4341">Contact</a></li>
-    <li><a href="https://app.advisorhud.com">Login</a></li>
+    <li><a href="https://app.advisorhud.com">Enter Platform</a></li>
   </ul>
   <div class="footer-copy">© 2026 AdvisorHUD · All Rights Reserved</div>
 </footer>
@@ -1468,7 +1472,7 @@
   });
 
   // Wire all CTA buttons/links to open modal
-  document.querySelectorAll('a[href="#cta"], .nav-cta').forEach(el => {
+  document.querySelectorAll('a[href="#cta"], .nav-cta, a.btn-primary').forEach(el => {
     el.addEventListener('click', function(e) {
       e.preventDefault();
       openModal();
