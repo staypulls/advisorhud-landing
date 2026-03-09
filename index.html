@@ -1472,7 +1472,7 @@
   });
 
   // Wire all CTA buttons/links to open modal
-  document.querySelectorAll('a[href="#cta"], .nav-cta, a.btn-primary').forEach(el => {
+  document.querySelectorAll('a[href="#cta"]').forEach(el => {
     el.addEventListener('click', function(e) {
       e.preventDefault();
       openModal();
