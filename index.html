@@ -316,8 +316,8 @@
 
     .stat-label {
       font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.2em;
+      font-size: 12px;
+      letter-spacing: 0.15em;
       color: var(--text-muted);
       text-transform: uppercase;
       margin-bottom: 6px;
@@ -325,7 +325,7 @@
 
     .stat-value {
       font-family: var(--mono);
-      font-size: 28px;
+      font-size: 32px;
       color: var(--cyan);
       line-height: 1;
     }
@@ -336,7 +336,7 @@
 
     .stat-sub {
       font-family: var(--mono);
-      font-size: 9px;
+      font-size: 11px;
       letter-spacing: 0.1em;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -1298,7 +1298,221 @@
   <div class="footer-copy">© 2026 AdvisorHUD · All Rights Reserved</div>
 </footer>
 
+<!-- DEMO MODAL -->
+<div id="demo-modal" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(7,12,20,0.92);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+">
+  <div style="
+    background: #0b1220;
+    border: 1px solid rgba(0,200,255,0.25);
+    width: 100%;
+    max-width: 480px;
+    margin: 24px;
+    position: relative;
+  ">
+    <!-- Header -->
+    <div style="
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(0,200,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    ">
+      <div>
+        <div style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.25em; color:#00c8ff; text-transform:uppercase; margin-bottom:6px;">Request a Demo</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; color:#e8f4ff; letter-spacing:0.04em;">See AdvisorHUD In Your Firm</div>
+      </div>
+      <button id="modal-close" style="
+        background: none;
+        border: none;
+        color: #3a5060;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 4px 8px;
+        line-height: 1;
+        transition: color 0.2s;
+      " onmouseover="this.style.color='#00c8ff'" onmouseout="this.style.color='#3a5060'">✕</button>
+    </div>
+
+    <!-- Form -->
+    <div style="padding: 28px;">
+      <div id="form-fields">
+        <div style="margin-bottom: 18px;">
+          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Your Name</label>
+          <input id="demo-name" type="text" placeholder="Jane Smith" style="
+            width: 100%;
+            background: #070c14;
+            border: 1px solid rgba(0,200,255,0.15);
+            color: #c8d8e8;
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 11px 14px;
+            outline: none;
+            transition: border-color 0.2s;
+          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Firm Name</label>
+          <input id="demo-firm" type="text" placeholder="Acme Wealth Management" style="
+            width: 100%;
+            background: #070c14;
+            border: 1px solid rgba(0,200,255,0.15);
+            color: #c8d8e8;
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 11px 14px;
+            outline: none;
+            transition: border-color 0.2s;
+          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Email</label>
+          <input id="demo-email" type="email" placeholder="jane@acmewealth.com" style="
+            width: 100%;
+            background: #070c14;
+            border: 1px solid rgba(0,200,255,0.15);
+            color: #c8d8e8;
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 11px 14px;
+            outline: none;
+            transition: border-color 0.2s;
+          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        </div>
+
+        <div style="margin-bottom: 28px;">
+          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Primary Custodian</label>
+          <select id="demo-custodian" style="
+            width: 100%;
+            background: #070c14;
+            border: 1px solid rgba(0,200,255,0.15);
+            color: #c8d8e8;
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 11px 14px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+          ">
+            <option value="" disabled selected>Select your custodian</option>
+            <option value="Fidelity / NFS">Fidelity / NFS</option>
+            <option value="Schwab">Schwab</option>
+            <option value="Pershing">Pershing</option>
+            <option value="AssetMark">AssetMark</option>
+            <option value="Cambridge / WealthPort">Cambridge / WealthPort</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div id="form-error" style="display:none; font-family:'Share Tech Mono',monospace; font-size:11px; color:#ff4757; margin-bottom:16px; letter-spacing:0.1em;"></div>
+
+        <button id="form-submit" onclick="submitDemoForm()" style="
+          width: 100%;
+          background: #00c8ff;
+          border: none;
+          color: #070c14;
+          font-family: 'Share Tech Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          padding: 14px;
+          cursor: pointer;
+          clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+          transition: opacity 0.2s;
+        " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          Request Demo →
+        </button>
+        <p style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#3a5060; text-transform:uppercase; text-align:center; margin-top:14px;">No commitment · We'll reach out within 24 hours</p>
+      </div>
+
+      <!-- Success state -->
+      <div id="form-success" style="display:none; text-align:center; padding: 20px 0;">
+        <div style="font-family:'Share Tech Mono',monospace; font-size:28px; color:#00e5a0; margin-bottom:16px;">✓</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:700; text-transform:uppercase; color:#e8f4ff; margin-bottom:10px;">Request Received</div>
+        <p style="font-size:14px; color:#5a7a8a; line-height:1.6;">We'll be in touch within 24 hours to schedule your demo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
+  // EmailJS
+  emailjs.init('-Kz8r6no8dYPJS53Z');
+
+  // Modal
+  const modal = document.getElementById('demo-modal');
+
+  function openModal() {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+
+  // Wire all CTA buttons/links to open modal
+  document.querySelectorAll('a[href="#cta"], .nav-cta').forEach(el => {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  // Form submit
+  function submitDemoForm() {
+    const name      = document.getElementById('demo-name').value.trim();
+    const firm      = document.getElementById('demo-firm').value.trim();
+    const email     = document.getElementById('demo-email').value.trim();
+    const custodian = document.getElementById('demo-custodian').value;
+    const errorEl   = document.getElementById('form-error');
+
+    if (!name || !firm || !email || !custodian) {
+      errorEl.textContent = 'All fields are required.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    const btn = document.getElementById('form-submit');
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.6';
+    btn.style.pointerEvents = 'none';
+
+    emailjs.send('service_mwr4nl2', 'template_ox4ome4', {
+      name:      name,
+      firm_name: firm,
+      email:     email,
+      custodian: custodian,
+    }).then(() => {
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }).catch((err) => {
+      errorEl.textContent = 'Something went wrong. Please email us directly.';
+      errorEl.style.display = 'block';
+      btn.textContent = 'Request Demo →';
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      console.error(err);
+    });
+  }
+
   // Scroll-triggered fade-up
   const fadeEls = document.querySelectorAll('.fade-up');
   fadeEls.forEach(el => el.classList.add('animate'));
