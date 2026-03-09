@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdvisorHUD — Operational Command for RIA Firms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #070c14;
+      --bg2:       #0b1220;
+      --bg3:       #0f1828;
+      --border:    rgba(0,200,255,0.12);
+      --border2:   rgba(0,200,255,0.25);
+      --cyan:      #00c8ff;
+      --cyan-dim:  rgba(0,200,255,0.6);
+      --cyan-glow: rgba(0,200,255,0.08);
+      --green:     #00e5a0;
+      --red:       #ff4757;
+      --orange:    #ffaa00;
+      --text:      #c8d8e8;
+      --text-dim:  #5a7a8a;
+      --text-muted:#3a5060;
+      --mono:      'Share Tech Mono', monospace;
+      --body:      'Barlow', sans-serif;
+      --cond:      'Barlow Condensed', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* Grid overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 60px;
+      background: rgba(7,12,20,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      position: relative;
+    }
+
+    .nav-logo-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .nav-logo-text {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      border: none;
+      padding: 8px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 48px 80px;
+      overflow: hidden;
+    }
+
+    .hero-scan-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      animation: scan 4s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -200px;
+      right: -100px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--cyan);
+    }
+
+    .hero-title {
+      font-family: var(--cond);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      margin-bottom: 8px;
+    }
+
+    .hero-title .accent {
+      color: var(--cyan);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      padding-top: 4px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 48px;
+      max-width: 540px;
+    }
+
+    .hero-desc strong {
+      color: #e8f4ff;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      border: none;
+      padding: 14px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .btn-primary::after {
+      content: '→';
+      margin-left: 8px;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateX(2px);
+    }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-dim);
+      background: transparent;
+      border: 1px solid var(--border2);
+      padding: 13px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      background: var(--cyan-glow);
+    }
+
+    .hero-stats {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 1;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      padding: 16px 24px;
+      min-width: 200px;
+      animation: fadeInRight 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .stat-card:nth-child(2) { border-left-color: var(--green); animation-delay: 0.1s; }
+    .stat-card:nth-child(3) { border-left-color: var(--orange); animation-delay: 0.2s; }
+    .stat-card:nth-child(4) { border-left-color: var(--red); animation-delay: 0.3s; }
+
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 28px;
+      color: var(--cyan);
+      line-height: 1;
+    }
+
+    .stat-card:nth-child(2) .stat-value { color: var(--green); }
+    .stat-card:nth-child(3) .stat-value { color: var(--orange); }
+    .stat-card:nth-child(4) .stat-value { color: var(--red); }
+
+    .stat-sub {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── TICKER ──────────────────────────── */
+    .ticker {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      overflow: hidden;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 64px;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .ticker-item .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--cyan);
+      opacity: 0.5;
+    }
+
+    /* ─── SECTION STRUCTURE ───────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 48px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--border2);
+    }
+
+    .section-title {
+      font-family: var(--cond);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 560px;
+    }
+
+    /* ─── PROBLEM SECTION ─────────────────── */
+    #problem {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .problem-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 32px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .problem-item:hover {
+      border-color: var(--border2);
+    }
+
+    .problem-item::before {
+      content: attr(data-num);
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: var(--mono);
+      font-size: 40px;
+      color: var(--text-muted);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .problem-icon {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .problem-title {
+      font-family: var(--cond);
+      font-size: 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .problem-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    /* ─── FEATURES ────────────────────────── */
+    #features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 48px;
+    }
+
+    .features-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end;
+      margin-bottom: 80px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--cyan);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border2);
+      background: var(--bg3);
+    }
+
+    .feature-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .feature-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-tag::before {
+      content: '◆';
+      font-size: 7px;
+    }
+
+    .feature-title {
+      font-family: var(--cond);
+      font-size: 26px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .feature-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    /* ─── WORKFLOW ────────────────────────── */
+    #workflow {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .workflow-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .workflow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 48px;
+    }
+
+    .workflow-step {
+      display: flex;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .workflow-step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      min-width: 32px;
+      padding-top: 2px;
+    }
+
+    .step-content {}
+
+    .step-title {
+      font-family: var(--cond);
+      font-size: 22px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    /* Mock HUD Panel */
+    .hud-panel {
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      position: relative;
+    }
+
+    .hud-panel::before {
+      content: '■ LIVE · FIRM-WIDE OPS VIEW';
+      display: block;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .hud-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .hud-metric {
+      background: var(--bg);
+      padding: 20px 18px;
+    }
+
+    .hud-metric-label {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .hud-metric-value {
+      font-family: var(--mono);
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hud-metric-sub {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .c-cyan { color: var(--cyan); }
+    .c-green { color: var(--green); }
+    .c-orange { color: var(--orange); }
+    .c-red { color: var(--red); }
+
+    .hud-list {
+      padding: 12px 0;
+    }
+
+    .hud-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 18px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-row:last-child { border-bottom: none; }
+
+    .hud-row-name { color: var(--text); }
+    .hud-row-tag {
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      padding: 2px 6px;
+      border: 1px solid;
+    }
+
+    .tag-urgent { color: var(--red); border-color: rgba(255,71,87,0.4); }
+    .tag-high   { color: var(--orange); border-color: rgba(255,170,0,0.4); }
+    .tag-normal { color: var(--text-dim); border-color: var(--border); }
+    .tag-done   { color: var(--green); border-color: rgba(0,229,160,0.4); }
+
+    .hud-row-age { color: var(--text-muted); font-size: 9px; }
+
+    /* ─── CUSTODIANS ──────────────────────── */
+    #custodians {
+      text-align: center;
+      padding: 60px 48px;
+    }
+
+    .custodian-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .custodian-list {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .custodian-name {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .custodian-name:hover { color: var(--cyan); }
+
+    .custodian-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border2);
+    }
+
+    /* ─── TESTIMONIAL ─────────────────────── */
+    #social-proof {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .testimonial-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .testimonial-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-author {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .testimonial-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── CTA SECTION ─────────────────────── */
+    #cta {
+      text-align: center;
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,200,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .cta-title {
+      font-family: var(--cond);
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #e8f4ff;
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .cta-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-bottom: 48px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .cta-note {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    /* ─── FOOTER ──────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ─── ANIMATIONS ──────────────────────── */
+    .fade-up {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.animate {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .fade-up.animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ──────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-stats { display: none; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .workflow-inner { grid-template-columns: 1fr; }
+      .hud-panel { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      #hero, section { padding-left: 24px; padding-right: 24px; }
+      .features-header { grid-template-columns: 1fr; gap: 32px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 28 28" fill="none">
+        <rect x="1" y="1" width="26" height="26" stroke="#00c8ff" stroke-width="1.5" opacity="0.4"/>
+        <rect x="5" y="5" width="18" height="18" stroke="#00c8ff" stroke-width="1"/>
+        <path d="M14 5 L14 23 M5 14 L23 14" stroke="#00c8ff" stroke-width="0.75" opacity="0.4"/>
+        <circle cx="14" cy="14" r="3" fill="#00c8ff"/>
+        <circle cx="14" cy="14" r="6" stroke="#00c8ff" stroke-width="0.75" stroke-dasharray="2 2"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">AdvisorHUD</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#workflow">How It Works</a></li>
+    <li><a href="#social-proof">Testimonials</a></li>
+    <li><a href="https://app.advisorhud.com">Login</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Request Demo</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-scan-line"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Operational Command for RIA Firms</div>
+    <h1 class="hero-title">
+      Your Ops Team<br>
+      <span class="accent">Finally Has A HUD.</span>
+    </h1>
+    <p class="hero-subtitle">AWACS · Advisor Workflow & Coordination System</p>
+    <p class="hero-desc">
+      AdvisorHUD gives your back-office team <strong>total operational visibility</strong> — active onboardings, open requests, overdue tasks, and team workload, all in one command interface built for RIA operations.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Request a Demo</a>
+      <a href="#features" class="btn-ghost">See How It Works</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-label">Active Onboardings</div>
+      <div class="stat-value">3</div>
+      <div class="stat-sub">In Progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Tasks Complete</div>
+      <div class="stat-value">50</div>
+      <div class="stat-sub">of 111 total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Open Requests</div>
+      <div class="stat-value">7</div>
+      <div class="stat-sub">Awaiting Action</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Alerts</div>
+      <div class="stat-value">4</div>
+      <div class="stat-sub">4 Overdue · 0 Blocked</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Schwab Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Pershing Integration</span>
+    <span class="ticker-item"><span class="dot"></span> AssetMark Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
+    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Support</span>
+    <span class="ticker-item"><span class="dot"></span> Real-Time SLA Tracking</span>
+    <span class="ticker-item"><span class="dot"></span> Team Workload Visibility</span>
+    <span class="ticker-item"><span class="dot"></span> Exception Alerts</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Schwab Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Pershing Integration</span>
+    <span class="ticker-item"><span class="dot"></span> AssetMark Integration</span>
+    <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
+    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Workflows</span>
+    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Support</span>
+    <span class="ticker-item"><span class="dot"></span> Real-Time SLA Tracking</span>
+    <span class="ticker-item"><span class="dot"></span> Team Workload Visibility</span>
+    <span class="ticker-item"><span class="dot"></span> Exception Alerts</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">RIA Ops Runs on Spreadsheets,<br>Emails & Guesswork.</h2>
+    <p class="section-body">Your team is managing dozens of moving parts across multiple custodians — with no single place to see what's happening, what's overdue, or who's responsible.</p>
+
+    <div class="problem-grid">
+      <div class="problem-item fade-up" data-num="01">
+        <div class="problem-icon">✕ Visibility Gap</div>
+        <div class="problem-title">No One Knows What's Actually Open</div>
+        <p class="problem-desc">Onboarding status lives in emails. Service requests get buried in inboxes. Deadlines slip because nobody has a clear picture of what's active.</p>
+      </div>
+      <div class="problem-item fade-up" data-num="02">
+        <div class="problem-icon">✕ Ownership Confusion</div>
+        <div class="problem-title">Unclear Who Owns What</div>
+        <p class="problem-desc">Tasks get assigned in meetings and lost by Monday. Without clear ownership and status, your ops team is always playing catch-up.</p>
+      </div>
+      <div class="problem-item fade-up" data-num="03">
+        <div class="problem-icon">✕ Exception Blindness</div>
+        <div class="problem-title">Overdue Items Surface Too Late</div>
+        <p class="problem-desc">By the time you realize something is overdue, it's already a problem for the advisor — or worse, for the client.</p>
+      </div>
+      <div class="problem-item fade-up" data-num="04">
+        <div class="problem-icon">✕ Custodian Fragmentation</div>
+        <div class="problem-title">Four Custodians, Four Different Portals</div>
+        <p class="problem-desc">Fidelity, Schwab, Pershing, AssetMark — your team is context-switching constantly with no unified workflow layer on top.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-header">
+    <div>
+      <div class="section-label">The Solution</div>
+      <h2 class="section-title">One Command Interface.<br>Total Operational Control.</h2>
+    </div>
+    <p class="section-body" style="margin-top:0;">AdvisorHUD was built specifically for RIA ops teams — not adapted from generic project management software. Every feature is designed around how your back-office actually works.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Onboarding</div>
+      <div class="feature-title">End-to-End Onboarding Workflows</div>
+      <p class="feature-desc">Track every advisor onboarding from week 1 registration through full platform access. Progress, tasks, deadlines, and blockers — all visible at a glance.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Requests</div>
+      <div class="feature-title">Centralized Request Queue</div>
+      <p class="feature-desc">Every service request — account openings, transfers, paperwork — surfaces in a single prioritized queue with SLA age, ownership, and status.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Alerts</div>
+      <div class="feature-title">Exception & Alert System</div>
+      <p class="feature-desc">Overdue tasks, blocked items, and SLA breaches are surfaced automatically. Your team stops items before they become advisor-visible problems.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Team</div>
+      <div class="feature-title">Ops Workload Visibility</div>
+      <p class="feature-desc">See at a glance what each team member has open. Balance workload, spot bottlenecks, and prevent burnout before it happens.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Custodians</div>
+      <div class="feature-title">Multi-Custodian Architecture</div>
+      <p class="feature-desc">Purpose-built for firms on Fidelity/NFS, Schwab, Pershing, AssetMark, and Cambridge/WealthPort — with workflows that mirror custodian-specific processes.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-tag">Materials</div>
+      <div class="feature-title">Branded Advisor Materials</div>
+      <p class="feature-desc">Generate and manage branded onboarding materials, checklists, and communications — all inside the same platform your ops team already lives in.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow">
+  <div class="workflow-inner" style="max-width:1200px; margin:0 auto;">
+    <div>
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Ops That Runs Like a Control Room.</h2>
+
+      <div class="workflow-steps">
+        <div class="workflow-step fade-up">
+          <span class="step-num">01</span>
+          <div class="step-content">
+            <div class="step-title">Firm-Wide Dashboard on Login</div>
+            <p class="step-desc">Every ops team member opens AdvisorHUD to a live command view — active onboardings, open requests, alerts, and team workload in one screen.</p>
+          </div>
+        </div>
+        <div class="workflow-step fade-up">
+          <span class="step-num">02</span>
+          <div class="step-content">
+            <div class="step-title">Exceptions Surface Automatically</div>
+            <p class="step-desc">Overdue tasks and SLA breaches are flagged without anyone having to check. The system brings problems to the team — not the other way around.</p>
+          </div>
+        </div>
+        <div class="workflow-step fade-up">
+          <span class="step-num">03</span>
+          <div class="step-content">
+            <div class="step-title">Clear Ownership at Every Step</div>
+            <p class="step-desc">Every task and request has an owner, a status, and an age. Nothing falls through the cracks because nothing is ambiguous.</p>
+          </div>
+        </div>
+        <div class="workflow-step fade-up">
+          <span class="step-num">04</span>
+          <div class="step-content">
+            <div class="step-title">Advisors See What They Should</div>
+            <p class="step-desc">Internal ops notes stay internal. Advisor-facing updates are clean, professional, and appropriate — without requiring a separate system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mock HUD panel -->
+    <div class="hud-panel fade-up">
+      <div class="hud-metrics">
+        <div class="hud-metric">
+          <div class="hud-metric-label">Active Onboardings</div>
+          <div class="hud-metric-value c-cyan">3</div>
+          <div class="hud-metric-sub c-cyan">In Progress</div>
+        </div>
+        <div class="hud-metric">
+          <div class="hud-metric-label">Tasks Complete</div>
+          <div class="hud-metric-value c-green">50</div>
+          <div class="hud-metric-sub" style="color:var(--text-muted)">of 111 total</div>
+        </div>
+        <div class="hud-metric">
+          <div class="hud-metric-label">Open Requests</div>
+          <div class="hud-metric-value c-orange">7</div>
+          <div class="hud-metric-sub c-orange">Awaiting Action</div>
+        </div>
+        <div class="hud-metric">
+          <div class="hud-metric-label">Alerts</div>
+          <div class="hud-metric-value c-red">4</div>
+          <div class="hud-metric-sub c-red">4 Overdue · 0 Blocked</div>
+        </div>
+      </div>
+      <div class="hud-list">
+        <div class="hud-row">
+          <span class="hud-row-name">NFS/Wealthscape Access — Kowalski</span>
+          <span class="hud-row-tag tag-urgent">Urgent</span>
+          <span class="hud-row-age">1d</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-row-name">FINRA 2273 Disclosure — Chen</span>
+          <span class="hud-row-tag tag-urgent">Urgent</span>
+          <span class="hud-row-age">4d</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-row-name">VA Appointment Forms — Kowalski</span>
+          <span class="hud-row-tag tag-high">High</span>
+          <span class="hud-row-age">2d</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-row-name">Schwab Account Transfer — Harrington</span>
+          <span class="hud-row-tag tag-high">High</span>
+          <span class="hud-row-age">3d</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-row-name">Setup 401k for John Deere</span>
+          <span class="hud-row-tag tag-normal">Normal</span>
+          <span class="hud-row-age">3h</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-row-name">Business Card Approval — Harrington</span>
+          <span class="hud-row-tag tag-normal">Normal</span>
+          <span class="hud-row-age">5d</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTODIANS -->
+<section id="custodians">
+  <p class="custodian-label">Works with your custodians</p>
+  <div class="custodian-list">
+    <span class="custodian-name">Fidelity / NFS</span>
+    <span class="custodian-sep"></span>
+    <span class="custodian-name">Schwab</span>
+    <span class="custodian-sep"></span>
+    <span class="custodian-name">Pershing</span>
+    <span class="custodian-sep"></span>
+    <span class="custodian-name">AssetMark</span>
+    <span class="custodian-sep"></span>
+    <span class="custodian-name">Cambridge / WealthPort</span>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="social-proof">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label">From the Field</div>
+    <h2 class="section-title">Built for Ops Teams.<br>Loved by Ops Teams.</h2>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-text">"We went from chasing down statuses in three different Slack channels to knowing exactly where every onboarding stands the moment we open the platform."</p>
+        <div class="testimonial-author">Director of Operations</div>
+        <div class="testimonial-role">Independent RIA · $800M AUM</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-text">"The alert system alone has saved us from at least a dozen advisor escalations. We know about problems before they become problems."</p>
+        <div class="testimonial-author">Ops Manager</div>
+        <div class="testimonial-role">Hybrid RIA · Fidelity & Schwab</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-text">"Finally a system that understands how RIA ops actually works — not some generic project tool we had to shoehorn into our workflow."</p>
+        <div class="testimonial-author">Chief Operating Officer</div>
+        <div class="testimonial-role">Multi-Custodian RIA · $1.2B AUM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-eyebrow">Ready to Upgrade Your Ops</div>
+  <h2 class="cta-title">See AdvisorHUD<br>In Your Firm.</h2>
+  <p class="cta-sub">Get a personalized walkthrough with your custodian setup, team structure, and workflows in mind.</p>
+  <a href="/cdn-cgi/l/email-protection#fc98999193bc9d988a958f938e948998d29f9391c38f899e96999f88c1b8999193dcae998d89998f88" class="btn-primary" style="font-size:13px; padding:16px 40px;">Request a Demo</a>
+  <p class="cta-note">No commitment · Typical setup in under a week</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AdvisorHUD</div>
+  <ul class="footer-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#workflow">How It Works</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#2c44494040436c4d485a455f435e445948024f4341">Contact</a></li>
+    <li><a href="https://app.advisorhud.com">Login</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 AdvisorHUD · All Rights Reserved</div>
+</footer>
+
+<script>
+  // Scroll-triggered fade-up
+  const fadeEls = document.querySelectorAll('.fade-up');
+  fadeEls.forEach(el => el.classList.add('animate'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
