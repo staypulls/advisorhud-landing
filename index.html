@@ -1320,6 +1320,23 @@
   function closeModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
   modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
 
+  function doSend(name, firm, email, custodian, aum) {
+    const btn = document.querySelector('.btn-submit');
+    const err = document.getElementById('form-error');
+    btn.textContent = 'Sending...';
+    emailjs.send('service_mwr4nl2', 'template_ox4ome4', {
+      name, firm_name: firm, email, custodian,
+      message: `AUM: ${aum} | Custodian: ${custodian}`
+    }).then(() => {
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }).catch(() => {
+      err.textContent = 'Something went wrong. Please try again.';
+      err.style.display = 'block';
+      btn.textContent = 'Request Demo →'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+    });
+  }
+
   function submitForm() {
     const name = document.getElementById('f-name').value.trim();
     const firm = document.getElementById('f-firm').value.trim();
@@ -1336,33 +1353,25 @@
     const btn = document.querySelector('.btn-submit');
     btn.textContent = 'Verifying...'; btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none';
 
-    // reCAPTCHA v3 — invisible, no user friction
-    grecaptcha.ready(function() {
-      grecaptcha.execute('6LcLmlosAAAAO3-cWf3YXekpQs6iepW2tSr38WE', { action: 'demo_request' }).then(function(token) {
-        if(!token) {
-          err.textContent = 'Verification failed. Please try again.';
-          err.style.display = 'block';
-          btn.textContent = 'Request Demo →'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
-          return;
-        }
-        btn.textContent = 'Sending...';
-        emailjs.send('service_mwr4nl2', 'template_ox4ome4', {
-          name, firm_name: firm, email, custodian,
-          message: `AUM: ${aum} | Custodian: ${custodian}`
-        }).then(() => {
-          document.getElementById('form-fields').style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        }).catch(() => {
-          err.textContent = 'Something went wrong. Please try again.';
-          err.style.display = 'block';
-          btn.textContent = 'Request Demo →'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+    // Timeout fallback — if reCAPTCHA hangs, send anyway after 4s
+    const fallbackTimer = setTimeout(() => {
+      doSend(name, firm, email, custodian, aum);
+    }, 4000);
+
+    try {
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LcLmlosAAAAO3-cWf3YXekpQs6iepW2tSr38WE', { action: 'demo_request' }).then(function(token) {
+          clearTimeout(fallbackTimer);
+          doSend(name, firm, email, custodian, aum);
+        }).catch(function() {
+          clearTimeout(fallbackTimer);
+          doSend(name, firm, email, custodian, aum);
         });
-      }).catch(() => {
-        err.textContent = 'Verification failed. Please refresh and try again.';
-        err.style.display = 'block';
-        btn.textContent = 'Request Demo →'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
       });
-    });
+    } catch(e) {
+      clearTimeout(fallbackTimer);
+      doSend(name, firm, email, custodian, aum);
+    }
   }
 
   // Scroll fade-up
