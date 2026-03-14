@@ -4,967 +4,738 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AdvisorHUD — Operational Command for RIA Firms</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="AdvisorHUD is the operations command platform built for RIA firms. Real-time advisor onboarding, request management, team workload intelligence, and AI-powered briefings — all in one system." />
+  <meta property="og:title" content="AdvisorHUD — Operational Command for RIA Firms" />
+  <meta property="og:description" content="Purpose-built workflow and onboarding command platform for independent RIA firms. Stop managing operations in email." />
+  <meta property="og:url" content="https://www.advisorhud.com" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.advisorhud.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:        #070c14;
-      --bg2:       #0b1220;
-      --bg3:       #0f1828;
-      --border:    rgba(0,200,255,0.12);
-      --border2:   rgba(0,200,255,0.25);
-      --cyan:      #00c8ff;
-      --cyan-dim:  rgba(0,200,255,0.6);
-      --cyan-glow: rgba(0,200,255,0.08);
-      --green:     #00e5a0;
-      --red:       #ff4757;
-      --orange:    #ffaa00;
-      --text:      #c8d8e8;
-      --text-dim:  #5a7a8a;
-      --text-muted:#3a5060;
-      --mono:      'Share Tech Mono', monospace;
-      --body:      'Barlow', sans-serif;
-      --cond:      'Barlow Condensed', sans-serif;
+      --bg:         #060a10;
+      --bg2:        #0a1018;
+      --bg3:        #0e1520;
+      --bg4:        #121c28;
+      --border:     rgba(0,210,255,0.10);
+      --border2:    rgba(0,210,255,0.22);
+      --border3:    rgba(0,210,255,0.40);
+      --cyan:       #00d2ff;
+      --cyan-dim:   rgba(0,210,255,0.55);
+      --cyan-glow:  rgba(0,210,255,0.07);
+      --cyan-glow2: rgba(0,210,255,0.12);
+      --green:      #00e5a0;
+      --green-dim:  rgba(0,229,160,0.08);
+      --amber:      #ffaa00;
+      --amber-dim:  rgba(255,170,0,0.08);
+      --red:        #ff4757;
+      --red-dim:    rgba(255,71,87,0.08);
+      --text:       #c8d8ea;
+      --text-dim:   #5a7a8a;
+      --text-muted: #2e4455;
+      --mono:       'Share Tech Mono', monospace;
+      --body:       'Barlow', sans-serif;
+      --cond:       'Barlow Condensed', sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
       font-family: var(--body);
       overflow-x: hidden;
-      cursor: default;
     }
 
-    /* Grid overlay */
+    /* Grid */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image:
-        linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
-      background-size: 40px 40px;
+        linear-gradient(rgba(0,210,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,210,255,0.018) 1px, transparent 1px);
+      background-size: 44px 44px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ─── NAV ─────────────────────────────── */
+    /* ── NAV ─────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 48px;
-      height: 60px;
-      background: rgba(7,12,20,0.92);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 62px;
+      background: rgba(6,10,16,0.94);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .nav-logo-icon {
-      width: 28px;
-      height: 28px;
-      position: relative;
-    }
-
-    .nav-logo-icon svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .nav-logo-text {
-      font-family: var(--mono);
-      font-size: 15px;
-      letter-spacing: 0.1em;
-      color: var(--cyan);
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
+      display: flex; align-items: center; gap: 11px;
       text-decoration: none;
+    }
+    .nav-logo svg { width: 26px; height: 26px; }
+    .nav-logo-text {
+      font-family: var(--mono); font-size: 14px;
+      letter-spacing: 0.12em; color: var(--cyan);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--cyan); }
-
-    .nav-cta {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--cyan);
-      border: none;
-      padding: 10px 22px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity 0.2s;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-login {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      transition: color 0.2s;
     }
-
+    .nav-login:hover { color: var(--cyan); }
+    .nav-cta {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--bg); background: var(--cyan);
+      border: none; padding: 10px 22px; cursor: pointer;
+      text-decoration: none;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+      transition: opacity 0.2s;
+    }
     .nav-cta:hover { opacity: 0.85; }
 
-    /* ─── HERO ────────────────────────────── */
+    /* ── HERO ────────────────────────────────── */
     #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 100px 48px 80px;
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 100px 52px 80px;
       overflow: hidden;
     }
-
-    .hero-scan-line {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      animation: scan 4s ease-in-out infinite;
-      opacity: 0.4;
+    .hero-scan {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%);
+      animation: hscan 5s ease-in-out infinite; opacity: 0;
     }
-
-    @keyframes scan {
-      0% { transform: translateY(0); opacity: 0; }
-      10% { opacity: 0.4; }
-      90% { opacity: 0.4; }
-      100% { transform: translateY(100vh); opacity: 0; }
+    @keyframes hscan {
+      0% { top: 62px; opacity: 0; }
+      5% { opacity: 0.5; }
+      95% { opacity: 0.3; }
+      100% { top: 100vh; opacity: 0; }
     }
-
-    .hero-glow {
-      position: absolute;
-      top: -200px;
-      right: -100px;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 70%);
+    .hero-glow-left {
+      position: absolute; top: -100px; left: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(0,210,255,0.05) 0%, transparent 65%);
       pointer-events: none;
     }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
+    .hero-glow-right {
+      position: absolute; bottom: -200px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,160,0.03) 0%, transparent 65%);
+      pointer-events: none;
     }
-
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.22em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 28px;
+      border: 1px solid var(--border2); padding: 6px 14px;
+      animation: fadeInUp 0.6s ease forwards;
     }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: var(--cyan);
+    .hero-badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s ease-in-out infinite;
     }
-
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .hero-title {
-      font-family: var(--cond);
-      font-size: clamp(48px, 6vw, 80px);
-      font-weight: 700;
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #e8f4ff;
-      margin-bottom: 8px;
-    }
-
-    .hero-title .accent {
-      color: var(--cyan);
-      display: block;
-    }
-
-    .hero-subtitle {
-      font-family: var(--mono);
-      font-size: 15px;
-      letter-spacing: 0.15em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-bottom: 32px;
-      padding-top: 4px;
-    }
-
-    .hero-desc {
-      font-size: 17px;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--text);
-      margin-bottom: 48px;
-      max-width: 540px;
-    }
-
-    .hero-desc strong {
-      color: #e8f4ff;
-      font-weight: 500;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--cyan);
-      border: none;
-      padding: 14px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: all 0.2s;
-      position: relative;
-    }
-
-    .btn-primary::after {
-      content: '→';
-      margin-left: 8px;
-    }
-
-    .btn-primary:hover {
-      background: #fff;
-      transform: translateX(2px);
-    }
-
-    .btn-ghost {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cyan-dim);
-      background: transparent;
-      border: 1px solid var(--border2);
-      padding: 13px 28px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s;
-    }
-
-    .btn-ghost:hover {
-      color: var(--cyan);
-      border-color: var(--cyan);
-      background: var(--cyan-glow);
-    }
-
-    .hero-stats {
-      position: absolute;
-      right: 48px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      z-index: 1;
-    }
-
-    .stat-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--cyan);
-      padding: 16px 24px;
-      min-width: 200px;
-      animation: fadeInRight 0.6s ease forwards;
-      opacity: 0;
-    }
-
-    .stat-card:nth-child(2) { border-left-color: var(--green); animation-delay: 0.1s; }
-    .stat-card:nth-child(3) { border-left-color: var(--orange); animation-delay: 0.2s; }
-    .stat-card:nth-child(4) { border-left-color: var(--red); animation-delay: 0.3s; }
-
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-family: var(--mono);
-      font-size: 32px;
-      color: var(--cyan);
-      line-height: 1;
-    }
-
-    .stat-card:nth-child(2) .stat-value { color: var(--green); }
-    .stat-card:nth-child(3) .stat-value { color: var(--orange); }
-    .stat-card:nth-child(4) .stat-value { color: var(--red); }
-
-    .stat-sub {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    /* ─── TICKER ──────────────────────────── */
-    .ticker {
-      position: relative;
-      z-index: 1;
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 0;
-      overflow: hidden;
-    }
-
-    .ticker-inner {
-      display: flex;
-      gap: 64px;
-      animation: ticker 30s linear infinite;
-      white-space: nowrap;
-    }
-
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .ticker-item .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--cyan);
-      opacity: 0.5;
-    }
-
-    /* ─── SECTION STRUCTURE ───────────────── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 100px 48px;
-    }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      display: block;
-      flex: 1;
-      max-width: 60px;
-      height: 1px;
-      background: var(--border2);
-    }
-
-    .section-title {
-      font-family: var(--cond);
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #e8f4ff;
-      line-height: 1.05;
-      letter-spacing: 0.02em;
-      margin-bottom: 20px;
-    }
-
-    .section-body {
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--text-dim);
-      max-width: 560px;
-    }
-
-    /* ─── PROBLEM SECTION ─────────────────── */
-    #problem {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      margin-top: 64px;
-    }
-
-    .problem-item {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 32px;
-      position: relative;
-      transition: border-color 0.2s;
-    }
-
-    .problem-item:hover {
-      border-color: var(--border2);
-    }
-
-    .problem-item::before {
-      content: attr(data-num);
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      font-family: var(--mono);
-      font-size: 40px;
-      color: var(--text-muted);
-      opacity: 0.3;
-      line-height: 1;
-    }
-
-    .problem-icon {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .problem-title {
-      font-family: var(--cond);
-      font-size: 24px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #e8f4ff;
+      font-family: var(--cond); font-weight: 800;
+      font-size: clamp(52px, 6.5vw, 88px);
+      line-height: 0.95; letter-spacing: -0.01em;
+      text-transform: uppercase; color: #eef4ff;
       margin-bottom: 10px;
-      letter-spacing: 0.05em;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+    .hero-title .accent { color: var(--cyan); display: block; }
+    .hero-title .dim { color: rgba(238,244,255,0.35); }
+    .hero-sub {
+      font-family: var(--mono); font-size: 12px;
+      letter-spacing: 0.22em; color: var(--text-dim);
+      text-transform: uppercase; margin-bottom: 36px;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+    .hero-desc {
+      font-size: 18px; font-weight: 300; line-height: 1.75;
+      color: var(--text); max-width: 560px; margin-bottom: 52px;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+    .hero-desc strong { color: #eef4ff; font-weight: 500; }
+    .hero-actions {
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+    .btn-primary {
+      font-family: var(--mono); font-size: 12px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--bg); background: var(--cyan);
+      border: none; padding: 16px 36px; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: all 0.2s; position: relative;
+    }
+    .btn-primary:hover { background: #fff; transform: translateX(3px); }
+    .btn-ghost {
+      font-family: var(--mono); font-size: 12px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cyan-dim); background: transparent;
+      border: 1px solid var(--border2); padding: 15px 28px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-glow); }
+    .hero-proof {
+      margin-top: 56px; display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.5s both;
+    }
+    .hero-proof-item {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      text-transform: uppercase; display: flex; align-items: center; gap: 8px;
+    }
+    .hero-proof-item::before {
+      content: '✓'; color: var(--green); font-size: 12px;
     }
 
-    .problem-desc {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-dim);
-      font-weight: 300;
+    /* Right panel */
+    .hero-panel {
+      position: absolute; right: 52px; top: 50%;
+      transform: translateY(-50%);
+      width: 340px; z-index: 1;
+      animation: fadeInRight 0.8s ease 0.4s both;
     }
-
-    /* ─── FEATURES ────────────────────────── */
-    #features {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 48px;
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateY(-50%) translateX(30px); }
+      to { opacity: 1; transform: translateY(-50%) translateX(0); }
     }
-
-    .features-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: end;
-      margin-bottom: 80px;
+    .panel-header {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-bottom: none; padding: 10px 14px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+    .panel-header-left {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.22em; color: var(--cyan); text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
     }
-
-    .feature-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      padding: 36px 28px;
-      transition: all 0.25s;
-      position: relative;
-      overflow: hidden;
+    .live-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 5px var(--green);
+      animation: pulse 1.5s ease-in-out infinite;
     }
-
-    .feature-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--cyan);
-      transform: scaleX(0);
-      transition: transform 0.25s;
+    .panel-header-right {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase;
     }
-
-    .feature-card:hover {
-      border-color: var(--border2);
-      background: var(--bg3);
+    .panel-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
     }
-
-    .feature-card:hover::after {
-      transform: scaleX(1);
+    .panel-stat {
+      background: var(--bg2); padding: 14px 16px;
     }
-
-    .feature-tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .panel-stat-label {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      text-transform: uppercase; margin-bottom: 5px;
     }
-
-    .feature-tag::before {
-      content: '◆';
-      font-size: 7px;
+    .panel-stat-value {
+      font-family: var(--mono); font-size: 28px; line-height: 1; margin-bottom: 3px;
     }
-
-    .feature-title {
-      font-family: var(--cond);
-      font-size: 26px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #e8f4ff;
-      margin-bottom: 12px;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
+    .panel-stat-sub {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.12em; text-transform: uppercase;
     }
-
-    .feature-desc {
-      font-size: 16px;
-      line-height: 1.65;
-      color: var(--text-dim);
-      font-weight: 300;
-    }
-
-    /* ─── WORKFLOW ────────────────────────── */
-    #workflow {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .workflow-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .workflow-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 48px;
-    }
-
-    .workflow-step {
-      display: flex;
-      gap: 24px;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .workflow-step:last-child { border-bottom: none; }
-
-    .step-num {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      min-width: 32px;
-      padding-top: 2px;
-    }
-
-    .step-content {}
-
-    .step-title {
-      font-family: var(--cond);
-      font-size: 22px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #e8f4ff;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
-
-    .step-desc {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-dim);
-      font-weight: 300;
-    }
-
-    /* Mock HUD Panel */
-    .hud-panel {
-      background: var(--bg);
-      border: 1px solid var(--border2);
-      position: relative;
-    }
-
-    .hud-panel::before {
-      content: '■ LIVE · FIRM-WIDE OPS VIEW';
-      display: block;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: var(--cyan);
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
-    }
-
-    .hud-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .hud-metric {
-      background: var(--bg);
-      padding: 20px 18px;
-    }
-
-    .hud-metric-label {
-      font-family: var(--mono);
-      font-size: 8px;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .hud-metric-value {
-      font-family: var(--mono);
-      font-size: 32px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .hud-metric-sub {
-      font-family: var(--mono);
-      font-size: 8px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
     .c-cyan { color: var(--cyan); }
     .c-green { color: var(--green); }
-    .c-orange { color: var(--orange); }
+    .c-amber { color: var(--amber); }
     .c-red { color: var(--red); }
-
-    .hud-list {
-      padding: 12px 0;
+    .panel-rows { border: 1px solid var(--border); border-top: none; }
+    .panel-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 14px; border-bottom: 1px solid var(--border);
+      background: var(--bg);
     }
-
-    .hud-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 18px;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.05em;
+    .panel-row:last-child { border-bottom: none; }
+    .panel-row-name {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.04em; color: var(--text);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      flex: 1; margin-right: 8px;
     }
-
-    .hud-row:last-child { border-bottom: none; }
-
-    .hud-row-name { color: var(--text); }
-    .hud-row-tag {
-      font-size: 8px;
-      letter-spacing: 0.15em;
-      padding: 2px 6px;
-      border: 1px solid;
+    .panel-tag {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.12em; padding: 2px 6px; border: 1px solid;
+      white-space: nowrap; flex-shrink: 0;
     }
-
     .tag-urgent { color: var(--red); border-color: rgba(255,71,87,0.4); }
-    .tag-high   { color: var(--orange); border-color: rgba(255,170,0,0.4); }
+    .tag-high { color: var(--amber); border-color: rgba(255,170,0,0.4); }
     .tag-normal { color: var(--text-dim); border-color: var(--border); }
-    .tag-done   { color: var(--green); border-color: rgba(0,229,160,0.4); }
-
-    .hud-row-age { color: var(--text-muted); font-size: 9px; }
-
-    /* ─── CUSTODIANS ──────────────────────── */
-    #custodians {
-      text-align: center;
-      padding: 60px 48px;
+    .tag-done { color: var(--green); border-color: rgba(0,229,160,0.4); }
+    .panel-intel {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-top: none; padding: 10px 14px;
+    }
+    .panel-intel-label {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.18em; color: var(--cyan); text-transform: uppercase; margin-bottom: 5px;
+    }
+    .panel-intel-text {
+      font-size: 11px; color: var(--text-dim); line-height: 1.5; font-weight: 300;
     }
 
-    .custodian-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.3em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 32px;
+    /* ── TICKER ──────────────────────────────── */
+    .ticker {
+      position: relative; z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 11px 0; overflow: hidden;
+    }
+    .ticker-inner {
+      display: flex; gap: 56px;
+      animation: ticker 35s linear infinite; white-space: nowrap;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.18em; color: var(--text-dim);
+      text-transform: uppercase; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .ticker-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: var(--cyan); opacity: 0.6;
     }
 
-    .custodian-list {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
+    /* ── SECTIONS ────────────────────────────── */
+    section { position: relative; z-index: 1; }
+    .inner { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+    .pad { padding-top: 100px; padding-bottom: 100px; }
+    .pad-sm { padding-top: 64px; padding-bottom: 64px; }
+
+    .section-eyebrow {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.24em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
     }
-
-    .custodian-name {
-      font-family: var(--mono);
-      font-size: 15px;
-      letter-spacing: 0.2em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .custodian-name:hover { color: var(--cyan); }
-
-    .custodian-sep {
-      width: 1px;
-      height: 16px;
+    .section-eyebrow::after {
+      content: ''; display: block; width: 40px; height: 1px;
       background: var(--border2);
     }
+    .section-title {
+      font-family: var(--cond); font-weight: 700;
+      font-size: clamp(34px, 4vw, 54px);
+      text-transform: uppercase; color: #eef4ff;
+      line-height: 1.0; letter-spacing: 0.02em; margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: 16px; font-weight: 300;
+      line-height: 1.75; color: var(--text-dim); max-width: 560px;
+    }
 
-    /* ─── TESTIMONIAL ─────────────────────── */
-    #social-proof {
+    /* ── PROBLEM ─────────────────────────────── */
+    #problem { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .problem-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border); margin-top: 60px;
+    }
+    .problem-card {
+      background: var(--bg); padding: 36px;
+      position: relative; transition: background 0.2s;
+    }
+    .problem-card:hover { background: var(--bg3); }
+    .problem-num {
+      position: absolute; top: 20px; right: 24px;
+      font-family: var(--mono); font-size: 44px;
+      color: var(--text-muted); line-height: 1; opacity: 0.4;
+    }
+    .problem-flag {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.22em; color: var(--red);
+      text-transform: uppercase; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .problem-title {
+      font-family: var(--cond); font-size: 24px; font-weight: 600;
+      text-transform: uppercase; color: #eef4ff;
+      margin-bottom: 12px; letter-spacing: 0.04em;
+    }
+    .problem-desc {
+      font-size: 15px; line-height: 1.68;
+      color: var(--text-dim); font-weight: 300;
+    }
+
+    /* ── FEATURES ────────────────────────────── */
+    .features-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: end; margin-bottom: 72px;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+    }
+    .feature-card {
+      background: var(--bg2); padding: 36px 30px;
+      position: relative; overflow: hidden;
+      transition: all 0.25s;
+    }
+    .feature-card::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .feature-card:hover { background: var(--bg3); }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-tag {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.26em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .feature-tag::before { content: '◆'; font-size: 6px; }
+    .feature-title {
+      font-family: var(--cond); font-size: 24px; font-weight: 600;
+      text-transform: uppercase; color: #eef4ff;
+      margin-bottom: 12px; letter-spacing: 0.04em; line-height: 1.1;
+    }
+    .feature-desc {
+      font-size: 15px; line-height: 1.68;
+      color: var(--text-dim); font-weight: 300;
+    }
+
+    /* ── ADVISOR SECTION ─────────────────────── */
+    #advisor { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .advisor-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .advisor-panel {
+      background: var(--bg); border: 1px solid var(--border2);
+    }
+    .advisor-panel-header {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .advisor-panel-header span {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.2em; color: var(--cyan); text-transform: uppercase;
+    }
+    .briefing-block {
+      padding: 16px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg3) 100%);
+    }
+    .briefing-label {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.2em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .briefing-text {
+      font-size: 11px; color: var(--text); line-height: 1.6; font-weight: 300;
+    }
+    .advisor-tasks { padding: 0; }
+    .advisor-task {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+    }
+    .advisor-task:last-child { border-bottom: none; }
+    .advisor-task-name {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.04em; color: var(--text); flex: 1; margin-right: 12px;
+    }
+    .advisor-task-status {
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 0.1em; padding: 2px 7px;
+      border: 1px solid; white-space: nowrap; flex-shrink: 0;
+    }
+    .status-done { color: var(--green); border-color: rgba(0,229,160,0.3); background: var(--green-dim); }
+    .status-standby { color: var(--text-dim); border-color: var(--border); }
+    .status-inprogress { color: var(--cyan); border-color: rgba(0,210,255,0.3); background: var(--cyan-glow); }
+    .advisor-points { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+    .advisor-point { display: flex; gap: 20px; }
+    .advisor-point-icon {
+      font-family: var(--mono); font-size: 14px; color: var(--cyan);
+      min-width: 24px; padding-top: 2px;
+    }
+    .advisor-point-title {
+      font-family: var(--cond); font-size: 18px; font-weight: 600;
+      text-transform: uppercase; color: #eef4ff; margin-bottom: 4px; letter-spacing: 0.04em;
+    }
+    .advisor-point-desc {
+      font-size: 14px; color: var(--text-dim); font-weight: 300; line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────── */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border); margin-top: 60px;
+    }
+    .step-card {
+      background: var(--bg2); padding: 32px 28px;
+      position: relative;
+    }
+    .step-num {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.2em; color: var(--text-muted);
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .step-title {
+      font-family: var(--cond); font-size: 20px; font-weight: 600;
+      text-transform: uppercase; color: #eef4ff;
+      letter-spacing: 0.04em; margin-bottom: 10px; line-height: 1.1;
+    }
+    .step-desc {
+      font-size: 14px; line-height: 1.65;
+      color: var(--text-dim); font-weight: 300;
+    }
+    .step-connector {
+      position: absolute; top: 32px; right: -1px;
+      width: 1px; height: 20px; background: var(--cyan); opacity: 0.3;
+    }
+
+    /* ── CUSTODIANS ──────────────────────────── */
+    #custodians {
+      text-align: center;
       background: var(--bg2);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
+    .custodian-label {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.3em; color: var(--text-muted);
+      text-transform: uppercase; margin-bottom: 36px;
+    }
+    .custodian-list {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .custodian-item {
+      font-family: var(--mono); font-size: 13px;
+      letter-spacing: 0.18em; color: var(--text-dim);
+      text-transform: uppercase; padding: 0 32px;
+      border-right: 1px solid var(--border2);
+      transition: color 0.2s;
+    }
+    .custodian-item:last-child { border-right: none; }
+    .custodian-item:hover { color: var(--cyan); }
 
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 64px;
+    /* ── PRINCIPLES ──────────────────────────── */
+    .principles-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); margin-top: 60px;
+    }
+    .principle-card {
+      background: var(--bg); padding: 36px;
+    }
+    .principle-num {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.22em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .principle-title {
+      font-family: var(--cond); font-size: 22px; font-weight: 600;
+      text-transform: uppercase; color: #eef4ff;
+      margin-bottom: 12px; letter-spacing: 0.04em;
+    }
+    .principle-desc {
+      font-size: 15px; line-height: 1.68;
+      color: var(--text-dim); font-weight: 300;
     }
 
-    .testimonial-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 32px;
-    }
-
-    .testimonial-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--text);
-      font-weight: 300;
-      font-style: italic;
-      margin-bottom: 24px;
-    }
-
-    .testimonial-author {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-    }
-
-    .testimonial-role {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    /* ─── CTA SECTION ─────────────────────── */
+    /* ── CTA ─────────────────────────────────── */
     #cta {
-      text-align: center;
-      padding: 120px 48px;
-      position: relative;
-      overflow: hidden;
+      text-align: center; padding: 120px 52px;
+      position: relative; overflow: hidden;
     }
-
     #cta::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      content: ''; position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(0,200,255,0.05) 0%, transparent 70%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,210,255,0.05) 0%, transparent 70%);
       pointer-events: none;
     }
-
     .cta-eyebrow {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 20px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.3em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
     }
-
     .cta-title {
-      font-family: var(--cond);
+      font-family: var(--cond); font-weight: 800;
       font-size: clamp(40px, 5vw, 68px);
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #e8f4ff;
-      line-height: 1.0;
-      letter-spacing: 0.02em;
-      margin-bottom: 20px;
+      text-transform: uppercase; color: #eef4ff;
+      line-height: 0.95; letter-spacing: 0.01em; margin-bottom: 24px;
     }
-
     .cta-sub {
-      font-size: 16px;
-      font-weight: 300;
-      color: var(--text-dim);
-      margin-bottom: 48px;
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
+      font-size: 17px; font-weight: 300;
+      color: var(--text-dim); margin-bottom: 52px;
+      max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7;
     }
-
+    .cta-actions {
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; flex-wrap: wrap; margin-bottom: 28px;
+    }
     .cta-note {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 20px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase;
     }
 
-    /* ─── FOOTER ──────────────────────────── */
+    /* ── FOOTER ──────────────────────────────── */
     footer {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
+      padding: 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; background: var(--bg2);
     }
-
     .footer-logo {
-      font-family: var(--mono);
-      font-size: 14px;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      white-space: nowrap;
+      font-family: var(--mono); font-size: 13px;
+      letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase;
     }
-
     .footer-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-      flex-wrap: nowrap;
+      display: flex; gap: 32px; list-style: none;
     }
-
     .footer-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      white-space: nowrap;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      text-decoration: none; text-transform: uppercase; transition: color 0.2s;
     }
-
     .footer-links a:hover { color: var(--cyan); }
-
     .footer-copy {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      white-space: nowrap;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.06em; color: var(--text-muted); text-transform: uppercase;
     }
 
-    /* ─── ANIMATIONS ──────────────────────── */
-    .fade-up {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    /* ── MODAL ───────────────────────────────── */
+    #modal {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(6,10,16,0.94); backdrop-filter: blur(12px);
+      align-items: center; justify-content: center;
+    }
+    .modal-box {
+      background: var(--bg2); border: 1px solid var(--border2);
+      width: 100%; max-width: 500px; margin: 24px;
+      position: relative;
+    }
+    .modal-header {
+      padding: 22px 28px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .modal-eyebrow {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.24em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .modal-title {
+      font-family: var(--cond); font-size: 24px; font-weight: 700;
+      text-transform: uppercase; color: #eef4ff; letter-spacing: 0.04em;
+    }
+    .modal-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 22px; cursor: pointer; padding: 4px 8px;
+      transition: color 0.2s; line-height: 1;
+    }
+    .modal-close:hover { color: var(--cyan); }
+    .modal-body { padding: 28px; }
+    .field-group { margin-bottom: 18px; }
+    .field-label {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.2em; color: var(--text-dim);
+      text-transform: uppercase; display: block; margin-bottom: 8px;
+    }
+    .field-input {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border2); color: var(--text);
+      font-family: var(--body); font-size: 15px;
+      padding: 11px 14px; outline: none; transition: border-color 0.2s;
+    }
+    .field-input:focus { border-color: var(--border3); }
+    .field-input option { background: var(--bg2); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-error {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--red); margin-bottom: 14px; display: none; letter-spacing: 0.1em;
+    }
+    .btn-submit {
+      width: 100%; background: var(--cyan); border: none;
+      color: var(--bg); font-family: var(--mono);
+      font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 15px; cursor: pointer;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: opacity 0.2s;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+    .form-note {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      text-transform: uppercase; text-align: center; margin-top: 14px;
+    }
+    .form-success {
+      display: none; text-align: center; padding: 20px 0;
+    }
+    .success-check {
+      font-family: var(--mono); font-size: 32px;
+      color: var(--green); margin-bottom: 16px;
+    }
+    .success-title {
+      font-family: var(--cond); font-size: 26px; font-weight: 700;
+      text-transform: uppercase; color: #eef4ff; margin-bottom: 10px;
+    }
+    .success-sub {
+      font-size: 14px; color: var(--text-dim); line-height: 1.6;
     }
 
-    .fade-up.animate {
-      opacity: 0;
-      transform: translateY(24px);
-    }
+    /* ── FADE ANIMATIONS ─────────────────────── */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    .fade-up.animate.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero-panel { display: none; }
+      .advisor-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
     }
-
-    /* ─── RESPONSIVE ──────────────────────── */
-    @media (max-width: 1024px) {
-      .hero-stats { display: none; }
+    @media (max-width: 900px) {
       .features-grid { grid-template-columns: 1fr 1fr; }
-      .workflow-inner { grid-template-columns: 1fr; }
-      .hud-panel { display: none; }
+      .features-header { grid-template-columns: 1fr; gap: 32px; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 768px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
-      #hero, section { padding-left: 24px; padding-right: 24px; }
-      .features-header { grid-template-columns: 1fr; gap: 32px; }
+      .inner, #hero { padding-left: 24px; padding-right: 24px; }
+      .hero-title { font-size: 44px; }
       .features-grid { grid-template-columns: 1fr; }
-      .problem-grid { grid-template-columns: 1fr; }
-      .testimonial-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .steps-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -972,67 +743,116 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <div class="nav-logo-icon">
-      <svg viewBox="0 0 28 28" fill="none">
-        <rect x="1" y="1" width="26" height="26" stroke="#00c8ff" stroke-width="1.5" opacity="0.4"/>
-        <rect x="5" y="5" width="18" height="18" stroke="#00c8ff" stroke-width="1"/>
-        <path d="M14 5 L14 23 M5 14 L23 14" stroke="#00c8ff" stroke-width="0.75" opacity="0.4"/>
-        <circle cx="14" cy="14" r="3" fill="#00c8ff"/>
-        <circle cx="14" cy="14" r="6" stroke="#00c8ff" stroke-width="0.75" stroke-dasharray="2 2"/>
-      </svg>
-    </div>
+  <a href="/" class="nav-logo">
+    <svg viewBox="0 0 26 26" fill="none">
+      <rect x="1" y="1" width="24" height="24" stroke="#00d2ff" stroke-width="1.5" opacity="0.35"/>
+      <rect x="5" y="5" width="16" height="16" stroke="#00d2ff" stroke-width="0.75"/>
+      <path d="M13 5 L13 21 M5 13 L21 13" stroke="#00d2ff" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="13" cy="13" r="2.5" fill="#00d2ff"/>
+      <circle cx="13" cy="13" r="5.5" stroke="#00d2ff" stroke-width="0.75" stroke-dasharray="2 2"/>
+    </svg>
     <span class="nav-logo-text">AdvisorHUD</span>
-  </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#features">Capabilities</a></li>
-    <li><a href="#workflow">How It Works</a></li>
-    <li><a href="#social-proof">Why It Exists</a></li>
+    <li><a href="#advisor">Advisor Experience</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
   </ul>
-  <a href="https://app.advisorhud.com" class="nav-cta">Enter Platform</a>
+  <div class="nav-right">
+    <a href="https://app.advisorhud.com" class="nav-login">Sign In</a>
+    <a href="#" class="nav-cta" onclick="openModal(); return false;">Request Demo</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-scan-line"></div>
-  <div class="hero-glow"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-glow-left"></div>
+  <div class="hero-glow-right"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Operational Command · Proxy Advisory Group</div>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Live Platform · v1.5.0
+    </div>
     <h1 class="hero-title">
-      Built for How<br>
-      <span class="accent">Proxy Actually Operates.</span>
+      Your Firm Runs<br>
+      <span class="accent">On Operations.</span>
+      <span class="dim">Finally,</span>
+      <span class="accent" style="font-size:0.75em;">A System Built For It.</span>
     </h1>
-    <p class="hero-subtitle">AWACS · Advisor Workflow & Coordination System</p>
+    <p class="hero-sub">AWACS · Advisor Workflow & Coordination System</p>
     <p class="hero-desc">
-      AdvisorHUD is an <strong>operational command platform</strong> built around the realities of running a multi-custodian RIA — giving ops teams real-time visibility into advisor onboarding, open requests, ownership, blockers, and SLA risk. All in one place.
+      AdvisorHUD is the <strong>operational command platform</strong> purpose-built for independent RIA firms. Real-time advisor onboarding, request management, team workload intelligence, and AI-powered briefings — replacing the spreadsheets, email threads, and tribal knowledge holding your operations back.
     </p>
     <div class="hero-actions">
-      <a href="https://app.advisorhud.com" class="btn-primary">Enter Platform</a>
-      <a href="#features" class="btn-ghost">Explore the System</a>
+      <a href="#" class="btn-primary" onclick="openModal(); return false;">Request a Demo</a>
+      <a href="#features" class="btn-ghost">See the Platform</a>
+    </div>
+    <div class="hero-proof">
+      <div class="hero-proof-item">Multi-custodian native</div>
+      <div class="hero-proof-item">Live at production firms</div>
+      <div class="hero-proof-item">AI-powered briefings</div>
+      <div class="hero-proof-item">No implementation required</div>
     </div>
   </div>
 
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="stat-label">Active Onboardings</div>
-      <div class="stat-value">3</div>
-      <div class="stat-sub">In Progress</div>
+  <!-- Live mock panel -->
+  <div class="hero-panel">
+    <div class="panel-header">
+      <div class="panel-header-left">
+        <div class="live-dot"></div>
+        AWACS · Firm Ops View
+      </div>
+      <div class="panel-header-right">Friday · Real-Time</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Tasks Complete</div>
-      <div class="stat-value">50</div>
-      <div class="stat-sub">of 111 total</div>
+    <div class="panel-stats">
+      <div class="panel-stat">
+        <div class="panel-stat-label">Active Onboardings</div>
+        <div class="panel-stat-value c-cyan">4</div>
+        <div class="panel-stat-sub c-cyan">In Progress</div>
+      </div>
+      <div class="panel-stat">
+        <div class="panel-stat-label">Tasks Complete</div>
+        <div class="panel-stat-value c-green">87</div>
+        <div class="panel-stat-sub" style="color:var(--text-muted)">of 218 total</div>
+      </div>
+      <div class="panel-stat">
+        <div class="panel-stat-label">Open Requests</div>
+        <div class="panel-stat-value c-amber">11</div>
+        <div class="panel-stat-sub c-amber">Awaiting Action</div>
+      </div>
+      <div class="panel-stat">
+        <div class="panel-stat-label">Alerts</div>
+        <div class="panel-stat-value c-red">3</div>
+        <div class="panel-stat-sub c-red">Overdue · Needs Attention</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Open Requests</div>
-      <div class="stat-value">7</div>
-      <div class="stat-sub">Awaiting Action</div>
+    <div class="panel-rows">
+      <div class="panel-row">
+        <div class="panel-row-name">FINRA 2273 Disclosure — Chen</div>
+        <div class="panel-tag tag-urgent">Urgent</div>
+      </div>
+      <div class="panel-row">
+        <div class="panel-row-name">Schwab ACAT — Harrington</div>
+        <div class="panel-tag tag-high">High</div>
+      </div>
+      <div class="panel-row">
+        <div class="panel-row-name">NFS Access Setup — Kowalski</div>
+        <div class="panel-tag tag-high">High</div>
+      </div>
+      <div class="panel-row">
+        <div class="panel-row-name">U4 Fingerprinting — Martinez</div>
+        <div class="panel-tag tag-normal">Normal</div>
+      </div>
+      <div class="panel-row">
+        <div class="panel-row-name">DocuSign — IA Affiliation Form</div>
+        <div class="panel-tag tag-done">Complete</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Alerts</div>
-      <div class="stat-value">4</div>
-      <div class="stat-sub">4 Overdue · 0 Blocked</div>
+    <div class="panel-intel">
+      <div class="panel-intel-label">◈ HUD Intelligence · Morning Briefing</div>
+      <div class="panel-intel-text">Good morning. Chen's FINRA disclosure is 2 days overdue — Alicia is on it. Harrington's ACAT submitted yesterday, expect 3-5 days. You have a clean afternoon.</div>
     </div>
   </div>
 </section>
@@ -1040,57 +860,64 @@
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Schwab Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Pershing Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> AssetMark Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
-    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Tracking</span>
-    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Operations</span>
-    <span class="ticker-item"><span class="dot"></span> SLA & Deadline Awareness</span>
-    <span class="ticker-item"><span class="dot"></span> Team Workload Management</span>
-    <span class="ticker-item"><span class="dot"></span> Exception & Alert Surfacing</span>
-    <!-- duplicate for seamless loop -->
-    <span class="ticker-item"><span class="dot"></span> Fidelity / NFS Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Schwab Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Pershing Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> AssetMark Workflows</span>
-    <span class="ticker-item"><span class="dot"></span> Cambridge / WealthPort</span>
-    <span class="ticker-item"><span class="dot"></span> FINRA Compliance Tracking</span>
-    <span class="ticker-item"><span class="dot"></span> Multi-Custodian Operations</span>
-    <span class="ticker-item"><span class="dot"></span> SLA & Deadline Awareness</span>
-    <span class="ticker-item"><span class="dot"></span> Team Workload Management</span>
-    <span class="ticker-item"><span class="dot"></span> Exception & Alert Surfacing</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Fidelity / NFS Workflows</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Schwab Onboarding</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Pershing Integration</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AssetMark Support</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cambridge / WealthPort</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>FINRA Compliance Tracking</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Multi-Custodian Operations</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>SLA & Deadline Intelligence</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Team Workload Management</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AI-Powered Briefings</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Advisor Onboarding Automation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Exception & Alert Surfacing</span>
+    <!-- duplicate -->
+    <span class="ticker-item"><span class="ticker-dot"></span>Fidelity / NFS Workflows</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Schwab Onboarding</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Pershing Integration</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AssetMark Support</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cambridge / WealthPort</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>FINRA Compliance Tracking</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Multi-Custodian Operations</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>SLA & Deadline Intelligence</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Team Workload Management</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AI-Powered Briefings</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Advisor Onboarding Automation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Exception & Alert Surfacing</span>
   </div>
 </div>
 
 <!-- PROBLEM -->
 <section id="problem">
-  <div style="max-width:1200px; margin:0 auto;">
-    <div class="section-label">The Operational Reality</div>
-    <h2 class="section-title">Multi-Custodian RIA Ops<br>Is Harder Than It Should Be.</h2>
-    <p class="section-body">Proxy operates across multiple custodians, manages dozens of active advisors, and runs a high volume of concurrent service requests — with no unified system to track any of it.</p>
-
+  <div class="inner pad">
+    <div class="section-eyebrow fade-up">The Operational Reality</div>
+    <h2 class="section-title fade-up">Multi-Custodian RIA Ops<br>Is Harder Than It Should Be.</h2>
+    <p class="section-body fade-up">Independent RIAs run complex operations across multiple custodians, manage advisor transitions, and handle high volumes of service requests — without a system built for any of it.</p>
     <div class="problem-grid">
-      <div class="problem-item fade-up" data-num="01">
-        <div class="problem-icon">✕ Visibility Gap</div>
+      <div class="problem-card fade-up">
+        <div class="problem-num">01</div>
+        <div class="problem-flag">✕ Visibility Gap</div>
         <div class="problem-title">No Single View of What's Active</div>
-        <p class="problem-desc">Onboarding status lives in emails and memory. Service requests are scattered across inboxes. There's no reliable way to know what's open, what's stuck, or what's at risk — without asking.</p>
+        <p class="problem-desc">Onboarding status lives in emails and memory. Requests are scattered across inboxes. There's no reliable way to know what's open, what's stuck, or what's at risk — without interrupting your team to ask.</p>
       </div>
-      <div class="problem-item fade-up" data-num="02">
-        <div class="problem-icon">✕ Ownership Ambiguity</div>
+      <div class="problem-card fade-up">
+        <div class="problem-num">02</div>
+        <div class="problem-flag">✕ Ownership Ambiguity</div>
         <div class="problem-title">Accountability Breaks Down at Scale</div>
-        <p class="problem-desc">Tasks get assigned verbally or in passing. Without a system of record, ownership is assumed rather than confirmed — and things fall through the cracks on busy days.</p>
+        <p class="problem-desc">Tasks get assigned verbally or in passing. Without a system of record, ownership is assumed rather than confirmed — and things fall through the cracks on the days that matter most.</p>
       </div>
-      <div class="problem-item fade-up" data-num="03">
-        <div class="problem-icon">✕ Exception Blindness</div>
+      <div class="problem-card fade-up">
+        <div class="problem-num">03</div>
+        <div class="problem-flag">✕ Reactive Operations</div>
         <div class="problem-title">Problems Surface After the Fact</div>
-        <p class="problem-desc">By the time an overdue item becomes visible, it's already an advisor escalation or a client impact. The team is reactive when it needs to be proactive.</p>
+        <p class="problem-desc">By the time an overdue item becomes visible, it's already an advisor escalation or a client impact. Your team is putting out fires instead of preventing them.</p>
       </div>
-      <div class="problem-item fade-up" data-num="04">
-        <div class="problem-icon">✕ Custodian Fragmentation</div>
-        <div class="problem-title">Every Custodian Is a Different Context Switch</div>
-        <p class="problem-desc">Fidelity, Schwab, Pershing, AssetMark, Cambridge — each has its own portal, its own process, its own quirks. There's no unified workflow layer sitting above all of them.</p>
+      <div class="problem-card fade-up">
+        <div class="problem-num">04</div>
+        <div class="problem-flag">✕ Advisor Experience Gap</div>
+        <div class="problem-title">Advisors Are Left in the Dark</div>
+        <p class="problem-desc">The advisors you recruit and onboard don't know where they are in the process, what's expected of them, or what your team is handling. That uncertainty costs you relationships and referrals.</p>
       </div>
     </div>
   </div>
@@ -1098,142 +925,149 @@
 
 <!-- FEATURES -->
 <section id="features">
-  <div class="features-header">
-    <div>
-      <div class="section-label">What AdvisorHUD Gives Operations</div>
-      <h2 class="section-title">One System.<br>Everything Visible.</h2>
+  <div class="inner pad">
+    <div class="features-header">
+      <div>
+        <div class="section-eyebrow fade-up">Platform Capabilities</div>
+        <h2 class="section-title fade-up">One System.<br>Every Operation.</h2>
+      </div>
+      <p class="section-body fade-up" style="margin-top:0">AdvisorHUD was designed around the actual workflow of a multi-custodian RIA ops team — not adapted from generic project management software. Every module reflects how high-performing advisory firms actually operate.</p>
     </div>
-    <p class="section-body" style="margin-top:0;">AdvisorHUD was designed around the actual workflow of a multi-custodian RIA ops team — not adapted from generic project management software. Every module reflects how Proxy's back-office actually operates.</p>
-  </div>
-
-  <div class="features-grid">
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Onboarding</div>
-      <div class="feature-title">End-to-End Onboarding Visibility</div>
-      <p class="feature-desc">Every active advisor onboarding is tracked from week 1 registration through full platform access — with progress, task completion, deadlines, and blockers visible at a glance.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Requests</div>
-      <div class="feature-title">Centralized Request Queue</div>
-      <p class="feature-desc">Every service request — account openings, ACATs, paperwork, access setup — surfaces in a single prioritized queue with SLA age, assigned owner, and current status.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Alerts</div>
-      <div class="feature-title">Exception & SLA Alert System</div>
-      <p class="feature-desc">Overdue tasks, blocked items, and SLA breaches are surfaced automatically. The ops team sees problems before they become advisor escalations or client impacts.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Team</div>
-      <div class="feature-title">Ops Workload Intelligence</div>
-      <p class="feature-desc">A live view of what each team member has open. Leadership can see where load is concentrated, where capacity exists, and where bottlenecks are forming — in real time.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Custodians</div>
-      <div class="feature-title">Multi-Custodian Workflow Layer</div>
-      <p class="feature-desc">Built for firms running Fidelity/NFS, Schwab, Pershing, AssetMark, and Cambridge/WealthPort — with workflows that reflect custodian-specific processes and requirements.</p>
-    </div>
-    <div class="feature-card fade-up">
-      <div class="feature-tag">Clarity</div>
-      <div class="feature-title">Advisor vs. Internal Separation</div>
-      <p class="feature-desc">Internal ops notes, flags, and communications stay internal. Advisor-facing status and updates are clean and appropriate — managed within the same system, not a separate one.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Command Center</div>
+        <div class="feature-title">AWACS Firm-Wide Dashboard</div>
+        <p class="feature-desc">Every ops team member opens to a live command view — active onboardings, open requests, alerts, workload distribution, and SLA risk. No status meetings required.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Onboarding</div>
+        <div class="feature-title">Phase-Gated Advisor Onboarding</div>
+        <p class="feature-desc">Full onboarding workflow from initial recruitment through 90-day post-active. Phases unlock progressively as milestones are hit. Advisor sees exactly what's relevant, nothing more.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Requests</div>
+        <div class="feature-title">Centralized Request Queue</div>
+        <p class="feature-desc">Every service request surfaces in a single prioritized queue with SLA age, assigned owner, current status, and embedded playbooks for complex multi-step workflows.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Intelligence</div>
+        <div class="feature-title">AI-Powered Morning Briefings</div>
+        <p class="feature-desc">Both ops leadership and individual advisors receive AI-generated daily briefings — personalized, contextual, and built from live mission data. Not a report. A conversation.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Team</div>
+        <div class="feature-title">Ops Workload Intelligence</div>
+        <p class="feature-desc">Live view of what each team member has open. See where load is concentrated, where capacity exists, and where bottlenecks are forming — before they become problems.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-tag">Projects</div>
+        <div class="feature-title">Internal Initiatives Tracker</div>
+        <p class="feature-desc">Firm-wide projects with milestones, owners, categories, and status visibility. Keeps leadership aligned on internal priorities alongside client-facing operations.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- WORKFLOW -->
-<section id="workflow">
-  <div class="workflow-inner" style="max-width:1200px; margin:0 auto;">
-    <div>
-      <div class="section-label">How Proxy Would Use This</div>
-      <h2 class="section-title">Ops That Runs Like a Control Room.</h2>
-
-      <div class="workflow-steps">
-        <div class="workflow-step fade-up">
-          <span class="step-num">01</span>
-          <div class="step-content">
-            <div class="step-title">Firm-Wide View on Every Login</div>
-            <p class="step-desc">Every ops team member opens to a live command view — active onboardings, open requests, alerts, and workload distribution across the team. No status meetings required.</p>
+<!-- ADVISOR EXPERIENCE -->
+<section id="advisor">
+  <div class="inner pad">
+    <div class="advisor-grid">
+      <div>
+        <div class="section-eyebrow fade-up">The Advisor Experience</div>
+        <h2 class="section-title fade-up">The First Thing<br>They Log Into.<br>The Reason They Stay.</h2>
+        <p class="section-body fade-up" style="margin-bottom:0">Advisors you recruit and transition see a personalized command center — not a list of tasks. They know exactly where they are, what they need to do, and what your team is handling on their behalf.</p>
+        <div class="advisor-points">
+          <div class="advisor-point fade-up">
+            <div class="advisor-point-icon">◈</div>
+            <div>
+              <div class="advisor-point-title">AI Morning Briefing</div>
+              <div class="advisor-point-desc">Personalized daily briefing with their progress, next steps, and reassurance about what ops is actively working on.</div>
+            </div>
+          </div>
+          <div class="advisor-point fade-up">
+            <div class="advisor-point-icon">▶</div>
+            <div>
+              <div class="advisor-point-title">Clear Next Step — Always</div>
+              <div class="advisor-point-desc">One prioritized action surfaced at the top. No hunting through 130 tasks to figure out what to do next.</div>
+            </div>
+          </div>
+          <div class="advisor-point fade-up">
+            <div class="advisor-point-icon">◉</div>
+            <div>
+              <div class="advisor-point-title">Ask Ops — In Context</div>
+              <div class="advisor-point-desc">Questions tied directly to tasks, with screenshot capture and file upload. Lands in your queue with full context. Eliminates Teams messages with zero context.</div>
+            </div>
           </div>
         </div>
-        <div class="workflow-step fade-up">
-          <span class="step-num">02</span>
-          <div class="step-content">
-            <div class="step-title">Exceptions Come to the Team</div>
-            <p class="step-desc">Overdue items and SLA breaches are flagged automatically. The system surfaces problems — the team doesn't have to go hunting for them.</p>
-          </div>
+      </div>
+      <div class="advisor-panel fade-up">
+        <div class="advisor-panel-header">
+          <div class="live-dot"></div>
+          <span>Advisor Briefing · HUD Intelligence</span>
         </div>
-        <div class="workflow-step fade-up">
-          <span class="step-num">03</span>
-          <div class="step-content">
-            <div class="step-title">Ownership Is Always Clear</div>
-            <p class="step-desc">Every task and request has a named owner, a status, and an age. Ambiguity is removed. Nothing is assumed. Nothing is lost.</p>
+        <div class="briefing-block">
+          <div class="briefing-label">
+            <div class="live-dot" style="width:4px;height:4px;"></div>
+            Morning Briefing · AI Generated
           </div>
+          <div class="briefing-text">Good morning, Sarah. You're 34% to Go Live with 44 days remaining. Your licensing paperwork is the critical path right now — the DocuSign package you received yesterday needs your signature today. Alicia has your FINRA registration in progress and expects confirmation by end of week. You're in good hands.</div>
         </div>
-        <div class="workflow-step fade-up">
-          <span class="step-num">04</span>
-          <div class="step-content">
-            <div class="step-title">Leadership Has a Real-Time Read</div>
-            <p class="step-desc">Operations leadership can see the full picture at any moment — what's active, what's at risk, who's overloaded, and what needs attention — without interrupting the team.</p>
+        <div class="advisor-tasks">
+          <div class="advisor-task" style="background:rgba(0,229,160,0.04); border-left:3px solid var(--green);">
+            <div class="advisor-task-name">▶ YOUR NEXT STEP · Sign IA Affiliation DocuSign</div>
+            <div class="advisor-task-status status-standby">DUE TODAY</div>
+          </div>
+          <div class="advisor-task">
+            <div class="advisor-task-name">Review state fee disclosure (DocuSign)</div>
+            <div class="advisor-task-status status-standby">DUE MAR 20</div>
+          </div>
+          <div class="advisor-task">
+            <div class="advisor-task-name">Complete Form U4 online</div>
+            <div class="advisor-task-status status-standby">DUE MAR 20</div>
+          </div>
+          <div class="advisor-task" style="opacity:0.5;">
+            <div class="advisor-task-name">FINRA registration submission</div>
+            <div class="advisor-task-status status-inprogress">OPS HANDLING</div>
+          </div>
+          <div class="advisor-task" style="opacity:0.5;">
+            <div class="advisor-task-name">Schwab rep code assignment</div>
+            <div class="advisor-task-status status-inprogress">OPS HANDLING</div>
+          </div>
+          <div class="advisor-task" style="opacity:0.4;">
+            <div class="advisor-task-name">Offer accepted/rejected</div>
+            <div class="advisor-task-status status-done">✓ DONE</div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Mock HUD panel -->
-    <div class="hud-panel fade-up">
-      <div class="hud-metrics">
-        <div class="hud-metric">
-          <div class="hud-metric-label">Active Onboardings</div>
-          <div class="hud-metric-value c-cyan">3</div>
-          <div class="hud-metric-sub c-cyan">In Progress</div>
-        </div>
-        <div class="hud-metric">
-          <div class="hud-metric-label">Tasks Complete</div>
-          <div class="hud-metric-value c-green">50</div>
-          <div class="hud-metric-sub" style="color:var(--text-muted)">of 111 total</div>
-        </div>
-        <div class="hud-metric">
-          <div class="hud-metric-label">Open Requests</div>
-          <div class="hud-metric-value c-orange">7</div>
-          <div class="hud-metric-sub c-orange">Awaiting Action</div>
-        </div>
-        <div class="hud-metric">
-          <div class="hud-metric-label">Alerts</div>
-          <div class="hud-metric-value c-red">4</div>
-          <div class="hud-metric-sub c-red">4 Overdue · 0 Blocked</div>
-        </div>
+<!-- HOW IT WORKS -->
+<section id="how-it-works" style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="inner pad">
+    <div class="section-eyebrow fade-up">How It Works</div>
+    <h2 class="section-title fade-up">From Demo to Live<br>in Days, Not Months.</h2>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-num">Step 01</div>
+        <div class="step-title">We Configure Your Firm</div>
+        <p class="step-desc">We set up your firm environment, import your onboarding templates, and configure your custodian workflows. No implementation project. No consultants.</p>
       </div>
-      <div class="hud-list">
-        <div class="hud-row">
-          <span class="hud-row-name">NFS/Wealthscape Access — Kowalski</span>
-          <span class="hud-row-tag tag-urgent">Urgent</span>
-          <span class="hud-row-age">1d</span>
-        </div>
-        <div class="hud-row">
-          <span class="hud-row-name">FINRA 2273 Disclosure — Chen</span>
-          <span class="hud-row-tag tag-urgent">Urgent</span>
-          <span class="hud-row-age">4d</span>
-        </div>
-        <div class="hud-row">
-          <span class="hud-row-name">VA Appointment Forms — Kowalski</span>
-          <span class="hud-row-tag tag-high">High</span>
-          <span class="hud-row-age">2d</span>
-        </div>
-        <div class="hud-row">
-          <span class="hud-row-name">Schwab Account Transfer — Harrington</span>
-          <span class="hud-row-tag tag-high">High</span>
-          <span class="hud-row-age">3d</span>
-        </div>
-        <div class="hud-row">
-          <span class="hud-row-name">Setup 401k for John Deere</span>
-          <span class="hud-row-tag tag-normal">Normal</span>
-          <span class="hud-row-age">3h</span>
-        </div>
-        <div class="hud-row">
-          <span class="hud-row-name">Business Card Approval — Harrington</span>
-          <span class="hud-row-tag tag-normal">Normal</span>
-          <span class="hud-row-age">5d</span>
-        </div>
+      <div class="step-card fade-up">
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Your Team Gets Access</div>
+        <p class="step-desc">Invite your ops team. Roles are pre-configured. Ops sees the full command center. Advisors see their briefing. Everyone knows what they're looking at on day one.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">Step 03</div>
+        <div class="step-title">Deploy Your First Onboarding</div>
+        <p class="step-desc">Select your template, configure the advisor, set the start date. The system deploys all phases and tasks in seconds. The advisor gets access to their briefing immediately.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">Step 04</div>
+        <div class="step-title">Operate at a Different Level</div>
+        <p class="step-desc">Your team works from AWACS. Your advisors work from Briefing. Leadership has a real-time read on everything. Nothing falls through the cracks again.</p>
       </div>
     </div>
   </div>
@@ -1241,42 +1075,39 @@
 
 <!-- CUSTODIANS -->
 <section id="custodians">
-  <p class="custodian-label">Designed around Proxy's custodian environment</p>
-  <div class="custodian-list">
-    <span class="custodian-name">Fidelity / NFS</span>
-    <span class="custodian-sep"></span>
-    <span class="custodian-name">Schwab</span>
-    <span class="custodian-sep"></span>
-    <span class="custodian-name">Pershing</span>
-    <span class="custodian-sep"></span>
-    <span class="custodian-name">AssetMark</span>
-    <span class="custodian-sep"></span>
-    <span class="custodian-name">Cambridge / WealthPort</span>
+  <div class="inner pad-sm">
+    <p class="custodian-label fade-up">Built for multi-custodian RIA environments</p>
+    <div class="custodian-list fade-up">
+      <span class="custodian-item">Fidelity / NFS</span>
+      <span class="custodian-item">Schwab</span>
+      <span class="custodian-item">Pershing</span>
+      <span class="custodian-item">AssetMark</span>
+      <span class="custodian-item">Cambridge / WealthPort</span>
+    </div>
   </div>
 </section>
 
 <!-- PRINCIPLES -->
-<section id="social-proof">
-  <div style="max-width:1200px; margin:0 auto;">
-    <div class="section-label">Why This Exists</div>
-    <h2 class="section-title">Built on a Simple Premise.<br>Ops Deserves Better Tooling.</h2>
-    <p class="section-body" style="margin-bottom: 64px;">AdvisorHUD started as a question: what would RIA operations look like if the team had the same situational awareness that a pilot has in the cockpit — everything critical, visible, surfaced before it becomes a problem. These are the principles it's built around.</p>
-
-    <div class="testimonial-grid">
-      <div class="testimonial-card fade-up">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 01</div>
-        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Visibility Before Action</div>
-        <p class="feature-desc">You can't manage what you can't see. Before anything else, AdvisorHUD is designed to give operations a complete, accurate picture of everything in motion — onboardings, requests, alerts, workload — at any moment.</p>
+<section id="principles" style="border-top:1px solid var(--border);">
+  <div class="inner pad">
+    <div class="section-eyebrow fade-up">Why AdvisorHUD Exists</div>
+    <h2 class="section-title fade-up">Built on a Simple Premise.<br>Ops Deserves Better Tooling.</h2>
+    <p class="section-body fade-up">AdvisorHUD started as a question: what would RIA operations look like if the team had the same situational awareness a pilot has in the cockpit — everything critical, visible, surfaced before it becomes a problem.</p>
+    <div class="principles-grid">
+      <div class="principle-card fade-up">
+        <div class="principle-num">Principle 01</div>
+        <div class="principle-title">Visibility Before Action</div>
+        <p class="principle-desc">You can't manage what you can't see. Before anything else, AdvisorHUD is designed to give operations a complete, accurate picture of everything in motion — at any moment, without asking anyone.</p>
       </div>
-      <div class="testimonial-card fade-up">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 02</div>
-        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Exceptions Should Find You</div>
-        <p class="feature-desc">A good ops system doesn't wait to be checked. It surfaces problems proactively — flagging overdue items, SLA risk, and blocked tasks before they require escalation or become advisor-visible issues.</p>
+      <div class="principle-card fade-up">
+        <div class="principle-num">Principle 02</div>
+        <div class="principle-title">Exceptions Should Find You</div>
+        <p class="principle-desc">A good ops system doesn't wait to be checked. It surfaces overdue items, SLA risk, and blocked tasks proactively — before they require escalation or become advisor-visible problems.</p>
       </div>
-      <div class="testimonial-card fade-up">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:16px;">Principle 03</div>
-        <div class="feature-title" style="font-size:20px; margin-bottom:12px;">Ownership Must Be Unambiguous</div>
-        <p class="feature-desc">Every task, every request, every open item has a named owner and a clear status. Not assumed. Not implied. Explicitly assigned and tracked — so accountability is built into the system, not left to culture.</p>
+      <div class="principle-card fade-up">
+        <div class="principle-num">Principle 03</div>
+        <div class="principle-title">Ownership Must Be Unambiguous</div>
+        <p class="principle-desc">Every task, every request, every open item has a named owner and a clear status. Not assumed. Not implied. Explicitly assigned and tracked — because accountability is built into the system, not left to culture.</p>
       </div>
     </div>
   </div>
@@ -1284,11 +1115,22 @@
 
 <!-- CTA -->
 <section id="cta">
-  <div class="cta-eyebrow">The Platform Is Live</div>
-  <h2 class="cta-title">AdvisorHUD Is<br>Ready to Explore.</h2>
-  <p class="cta-sub">Log in to walk through an active onboarding, explore the request queue, or review the alert and workload views. The core workflows are functional and running.</p>
-  <a href="https://app.advisorhud.com" class="btn-primary" style="font-size:13px; padding:16px 40px;">Enter Platform</a>
-  <p class="cta-note">Proxy Advisory Group · Internal Access</p>
+  <div style="position:relative; z-index:1;">
+    <div class="cta-eyebrow">
+      <div class="hero-badge-dot"></div>
+      Live Platform · Taking New Firms Now
+    </div>
+    <h2 class="cta-title">
+      Your Firm.<br>
+      <span style="color:var(--cyan);">Running Like a Command Center.</span>
+    </h2>
+    <p class="cta-sub">See AdvisorHUD running against your firm's actual workflows. We'll show you the full advisor onboarding experience, the ops command view, and the AI briefing system — live.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" onclick="openModal(); return false;">Request a Demo</a>
+      <a href="https://app.advisorhud.com" class="btn-ghost">Sign In to Platform</a>
+    </div>
+    <p class="cta-note">No commitment · Response within 24 hours · Built for independent RIAs</p>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1296,153 +1138,74 @@
   <div class="footer-logo">AdvisorHUD</div>
   <ul class="footer-links">
     <li><a href="#features">Capabilities</a></li>
-    <li><a href="#workflow">How It Works</a></li>
-    <li><a href="https://app.advisorhud.com">Enter Platform</a></li>
+    <li><a href="#advisor">Advisor Experience</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="https://app.advisorhud.com">Sign In</a></li>
+    <li><a href="#" onclick="openModal(); return false;">Request Demo</a></li>
   </ul>
   <div class="footer-copy">© 2026 AdvisorHUD · All Rights Reserved</div>
 </footer>
 
 <!-- DEMO MODAL -->
-<div id="demo-modal" style="
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: rgba(7,12,20,0.92);
-  backdrop-filter: blur(8px);
-  align-items: center;
-  justify-content: center;
-">
-  <div style="
-    background: #0b1220;
-    border: 1px solid rgba(0,200,255,0.25);
-    width: 100%;
-    max-width: 480px;
-    margin: 24px;
-    position: relative;
-  ">
-    <!-- Header -->
-    <div style="
-      padding: 20px 28px;
-      border-bottom: 1px solid rgba(0,200,255,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    ">
+<div id="modal">
+  <div class="modal-box">
+    <div class="modal-header">
       <div>
-        <div style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.25em; color:#00c8ff; text-transform:uppercase; margin-bottom:6px;">Request a Demo</div>
-        <div style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; color:#e8f4ff; letter-spacing:0.04em;">See AdvisorHUD In Your Firm</div>
+        <div class="modal-eyebrow">Request a Demo</div>
+        <div class="modal-title">See AdvisorHUD In Your Firm</div>
       </div>
-      <button id="modal-close" style="
-        background: none;
-        border: none;
-        color: #3a5060;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 4px 8px;
-        line-height: 1;
-        transition: color 0.2s;
-      " onmouseover="this.style.color='#00c8ff'" onmouseout="this.style.color='#3a5060'">✕</button>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-
-    <!-- Form -->
-    <div style="padding: 28px;">
+    <div class="modal-body">
       <div id="form-fields">
-        <div style="margin-bottom: 18px;">
-          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Your Name</label>
-          <input id="demo-name" type="text" placeholder="Jane Smith" style="
-            width: 100%;
-            background: #070c14;
-            border: 1px solid rgba(0,200,255,0.15);
-            color: #c8d8e8;
-            font-family: 'Barlow', sans-serif;
-            font-size: 15px;
-            padding: 11px 14px;
-            outline: none;
-            transition: border-color 0.2s;
-          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Your Name</label>
+            <input id="f-name" type="text" class="field-input" placeholder="Jane Smith" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Firm Name</label>
+            <input id="f-firm" type="text" class="field-input" placeholder="Acme Wealth Management" />
+          </div>
         </div>
-
-        <div style="margin-bottom: 18px;">
-          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Firm Name</label>
-          <input id="demo-firm" type="text" placeholder="Acme Wealth Management" style="
-            width: 100%;
-            background: #070c14;
-            border: 1px solid rgba(0,200,255,0.15);
-            color: #c8d8e8;
-            font-family: 'Barlow', sans-serif;
-            font-size: 15px;
-            padding: 11px 14px;
-            outline: none;
-            transition: border-color 0.2s;
-          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        <div class="field-group">
+          <label class="field-label">Email Address</label>
+          <input id="f-email" type="email" class="field-input" placeholder="jane@acmewealth.com" />
         </div>
-
-        <div style="margin-bottom: 18px;">
-          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Email</label>
-          <input id="demo-email" type="email" placeholder="jane@acmewealth.com" style="
-            width: 100%;
-            background: #070c14;
-            border: 1px solid rgba(0,200,255,0.15);
-            color: #c8d8e8;
-            font-family: 'Barlow', sans-serif;
-            font-size: 15px;
-            padding: 11px 14px;
-            outline: none;
-            transition: border-color 0.2s;
-          " onfocus="this.style.borderColor='rgba(0,200,255,0.5)'" onblur="this.style.borderColor='rgba(0,200,255,0.15)'" />
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Primary Custodian</label>
+            <select id="f-custodian" class="field-input">
+              <option value="" disabled selected>Select custodian</option>
+              <option>Fidelity / NFS</option>
+              <option>Schwab</option>
+              <option>Pershing</option>
+              <option>AssetMark</option>
+              <option>Cambridge / WealthPort</option>
+              <option>Multiple Custodians</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Firm AUM (approx)</label>
+            <select id="f-aum" class="field-input">
+              <option value="" disabled selected>Select range</option>
+              <option>Under $100M</option>
+              <option>$100M – $250M</option>
+              <option>$250M – $500M</option>
+              <option>$500M – $1B</option>
+              <option>Over $1B</option>
+            </select>
+          </div>
         </div>
-
-        <div style="margin-bottom: 28px;">
-          <label style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.2em; color:#5a7a8a; text-transform:uppercase; display:block; margin-bottom:8px;">Primary Custodian</label>
-          <select id="demo-custodian" style="
-            width: 100%;
-            background: #070c14;
-            border: 1px solid rgba(0,200,255,0.15);
-            color: #c8d8e8;
-            font-family: 'Barlow', sans-serif;
-            font-size: 15px;
-            padding: 11px 14px;
-            outline: none;
-            cursor: pointer;
-            appearance: none;
-          ">
-            <option value="" disabled selected>Select your custodian</option>
-            <option value="Fidelity / NFS">Fidelity / NFS</option>
-            <option value="Schwab">Schwab</option>
-            <option value="Pershing">Pershing</option>
-            <option value="AssetMark">AssetMark</option>
-            <option value="Cambridge / WealthPort">Cambridge / WealthPort</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div id="form-error" style="display:none; font-family:'Share Tech Mono',monospace; font-size:11px; color:#ff4757; margin-bottom:16px; letter-spacing:0.1em;"></div>
-
-        <button id="form-submit" onclick="submitDemoForm()" style="
-          width: 100%;
-          background: #00c8ff;
-          border: none;
-          color: #070c14;
-          font-family: 'Share Tech Mono', monospace;
-          font-size: 12px;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          padding: 14px;
-          cursor: pointer;
-          clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-          transition: opacity 0.2s;
-        " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-          Request Demo →
-        </button>
-        <p style="font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#3a5060; text-transform:uppercase; text-align:center; margin-top:14px;">No commitment · We'll reach out within 24 hours</p>
+        <div id="form-error" class="form-error"></div>
+        <button class="btn-submit" onclick="submitForm()">Request Demo →</button>
+        <p class="form-note">No commitment · We'll reach out within 24 hours</p>
       </div>
-
-      <!-- Success state -->
-      <div id="form-success" style="display:none; text-align:center; padding: 20px 0;">
-        <div style="font-family:'Share Tech Mono',monospace; font-size:28px; color:#00e5a0; margin-bottom:16px;">✓</div>
-        <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:700; text-transform:uppercase; color:#e8f4ff; margin-bottom:10px;">Request Received</div>
-        <p style="font-size:14px; color:#5a7a8a; line-height:1.6;">We'll be in touch within 24 hours to schedule your demo.</p>
+      <div class="form-success" id="form-success">
+        <div class="success-check">✓</div>
+        <div class="success-title">Request Received</div>
+        <p class="success-sub">We'll be in touch within 24 hours to schedule your demo. Looking forward to showing you what AdvisorHUD can do for your firm.</p>
       </div>
     </div>
   </div>
@@ -1450,87 +1213,53 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // EmailJS
   emailjs.init('-Kz8r6no8dYPJS53Z');
 
-  // Modal
-  const modal = document.getElementById('demo-modal');
+  const modal = document.getElementById('modal');
+  function openModal() { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
+  modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
 
-  function openModal() {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
+  function submitForm() {
+    const name = document.getElementById('f-name').value.trim();
+    const firm = document.getElementById('f-firm').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const custodian = document.getElementById('f-custodian').value;
+    const aum = document.getElementById('f-aum').value;
+    const err = document.getElementById('form-error');
 
-  function closeModal() {
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('modal-close').addEventListener('click', closeModal);
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) closeModal();
-  });
-
-  // Wire all CTA buttons/links to open modal
-  document.querySelectorAll('a[href="#cta"]').forEach(el => {
-    el.addEventListener('click', function(e) {
-      e.preventDefault();
-      openModal();
-    });
-  });
-
-  // Form submit
-  function submitDemoForm() {
-    const name      = document.getElementById('demo-name').value.trim();
-    const firm      = document.getElementById('demo-firm').value.trim();
-    const email     = document.getElementById('demo-email').value.trim();
-    const custodian = document.getElementById('demo-custodian').value;
-    const errorEl   = document.getElementById('form-error');
-
-    if (!name || !firm || !email || !custodian) {
-      errorEl.textContent = 'All fields are required.';
-      errorEl.style.display = 'block';
-      return;
+    if(!name || !firm || !email || !custodian || !aum) {
+      err.textContent = 'All fields are required.';
+      err.style.display = 'block'; return;
     }
-
-    errorEl.style.display = 'none';
-    const btn = document.getElementById('form-submit');
-    btn.textContent = 'Sending...';
-    btn.style.opacity = '0.6';
-    btn.style.pointerEvents = 'none';
+    err.style.display = 'none';
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = 'Sending...'; btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none';
 
     emailjs.send('service_mwr4nl2', 'template_ox4ome4', {
-      name:      name,
-      firm_name: firm,
-      email:     email,
-      custodian: custodian,
+      name, firm_name: firm, email, custodian,
+      message: `AUM: ${aum} | Custodian: ${custodian}`
     }).then(() => {
       document.getElementById('form-fields').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-    }).catch((err) => {
-      errorEl.textContent = 'Something went wrong. Please email us directly.';
-      errorEl.style.display = 'block';
-      btn.textContent = 'Request Demo →';
-      btn.style.opacity = '1';
-      btn.style.pointerEvents = 'auto';
-      console.error(err);
+    }).catch(err => {
+      document.getElementById('form-error').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('form-error').style.display = 'block';
+      btn.textContent = 'Request Demo →'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
     });
   }
 
-  // Scroll-triggered fade-up
+  // Scroll fade-up
   const fadeEls = document.querySelectorAll('.fade-up');
-  fadeEls.forEach(el => el.classList.add('animate'));
-
-  const observer = new IntersectionObserver((entries) => {
+  const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
+      if(e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
-
-  fadeEls.forEach(el => observer.observe(el));
+  }, { threshold: 0.08 });
+  fadeEls.forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
