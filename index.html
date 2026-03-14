@@ -174,11 +174,7 @@
       color: #eeeef8; text-transform: uppercase;
     }
     .nav-logo-main em { font-style: normal; color: var(--cyan); }
-    .nav-logo-sub {
-      font-family: 'JetBrains Mono', monospace; font-weight: 300;
-      font-size: 6px; letter-spacing: 0.24em; color: var(--text-muted);
-      text-transform: uppercase;
-    }
+    .nav-logo-sub { display: none; }
     .nav-links {
       display: flex; align-items: center; gap: 36px; list-style: none;
     }
@@ -238,7 +234,7 @@
       background: radial-gradient(circle, rgba(0,229,160,0.03) 0%, transparent 65%);
       pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-content { position: relative; z-index: 1; max-width: 580px; }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
@@ -293,25 +289,25 @@
     }
     .btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-glow); }
     .hero-proof {
-      margin-top: 48px; display: flex; align-items: center; gap: 24px; flex-wrap: nowrap;
+      margin-top: 48px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
       animation: fadeInUp 0.6s ease 0.5s both;
     }
     .hero-proof-item {
-      font-family: var(--mono); font-size: 11px;
-      letter-spacing: 0.12em; color: var(--text-muted);
-      text-transform: uppercase; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+      font-family: var(--mono); font-size: 13px;
+      letter-spacing: 0.1em; color: var(--text-dim);
+      text-transform: uppercase; display: flex; align-items: center; gap: 8px;
     }
     .hero-proof-item::before {
-      content: '✓'; color: var(--green); font-size: 12px;
+      content: '✓'; color: var(--green); font-size: 13px; flex-shrink: 0;
     }
 
     /* Right panel */
     .hero-panel {
-      position: absolute; right: 52px;
-      top: calc(62px + 60px);
-      width: 300px; z-index: 1;
+      position: absolute; right: 24px;
+      top: calc(62px + 40px);
+      width: 280px; z-index: 1;
       animation: fadeInRight 0.8s ease 0.4s both;
-      max-height: calc(100vh - 160px);
+      max-height: calc(100vh - 140px);
       overflow: hidden;
     }
     @keyframes fadeInRight {
