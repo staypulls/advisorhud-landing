@@ -207,8 +207,13 @@
     /* ── HERO ────────────────────────────────── */
     #hero {
       position: relative; min-height: 100vh;
-      display: flex; align-items: flex-start;
-      padding: calc(62px + 80px) 52px 80px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 60px;
+      align-items: center;
+      padding: calc(62px + 60px) 52px 60px;
+      max-width: 1300px;
+      margin: 0 auto;
       overflow: hidden;
     }
     .hero-scan {
@@ -223,10 +228,10 @@
       100% { top: 100vh; opacity: 0; }
     }
     .hero-glow-left {
-      position: absolute; top: -100px; left: -200px;
+      position: fixed; top: 0; left: -200px;
       width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(0,210,255,0.05) 0%, transparent 65%);
-      pointer-events: none;
+      background: radial-gradient(circle, rgba(0,210,255,0.04) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
     }
     .hero-glow-right {
       position: absolute; bottom: -200px; right: -100px;
@@ -234,7 +239,7 @@
       background: radial-gradient(circle, rgba(0,229,160,0.03) 0%, transparent 65%);
       pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 580px; }
+    .hero-content { position: relative; z-index: 1; }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
@@ -245,10 +250,10 @@
     }
     .hero-title {
       font-family: var(--cond); font-weight: 800;
-      font-size: clamp(52px, 6.5vw, 88px);
-      line-height: 0.95; letter-spacing: -0.01em;
+      font-size: clamp(56px, 7vw, 96px);
+      line-height: 0.93; letter-spacing: -0.01em;
       text-transform: uppercase; color: #eef4ff;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       animation: fadeInUp 0.6s ease 0.1s both;
     }
     .hero-title .accent { color: var(--cyan); display: block; }
@@ -289,29 +294,30 @@
     }
     .btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-glow); }
     .hero-proof {
-      margin-top: 48px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+      margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px 24px;
       animation: fadeInUp 0.6s ease 0.5s both;
+      max-width: 520px;
     }
     .hero-proof-item {
-      font-family: var(--mono); font-size: 13px;
+      font-family: var(--mono); font-size: 12px;
       letter-spacing: 0.1em; color: var(--text-dim);
       text-transform: uppercase; display: flex; align-items: center; gap: 8px;
     }
     .hero-proof-item::before {
-      content: '✓'; color: var(--green); font-size: 13px; flex-shrink: 0;
+      content: '✓'; color: var(--green); font-size: 12px; flex-shrink: 0;
     }
 
     /* Right panel */
     .hero-panel {
-      position: absolute; right: 24px;
-      top: calc(62px + 40px);
-      width: 280px; z-index: 1;
+      position: relative;
+      width: 100%;
+      z-index: 1;
       animation: fadeInRight 0.8s ease 0.4s both;
-      max-height: calc(100vh - 140px);
-      overflow: hidden;
+      align-self: center;
     }
     @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(30px); }
+      from { opacity: 0; transform: translateX(20px); }
       to { opacity: 1; transform: translateX(0); }
     }
     .panel-header {
@@ -802,6 +808,7 @@
 
     /* ── RESPONSIVE ──────────────────────────── */
     @media (max-width: 1100px) {
+      #hero { grid-template-columns: 1fr; }
       .hero-panel { display: none; }
       .advisor-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
@@ -857,9 +864,9 @@
 <main>
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-scan"></div>
+  <div class="hero-scan" style="grid-column:1/-1;position:absolute;"></div>
   <div class="hero-glow-left"></div>
-  <div class="hero-glow-right"></div>
+  <div class="hero-glow-right" style="position:fixed;bottom:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,160,0.03) 0%,transparent 65%);pointer-events:none;z-index:0;"></div>
 
   <div class="hero-content">
     <h1 class="hero-title">
